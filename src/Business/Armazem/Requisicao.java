@@ -1,5 +1,4 @@
 package Business.Armazem;
-
 import java.util.Collection;
 
 public class Requisicao {

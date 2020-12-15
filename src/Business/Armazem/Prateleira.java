@@ -1,4 +1,5 @@
 package Business.Armazem;
+import Business.Armazem.Palete;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,7 +8,7 @@ public class Prateleira {
     private String prateleiraID;
     private int capacidade;
     private int ocupacao;
-    private Map<String,Palete> paletes;
+    private Map<String, Palete> paletes;
 
     public Prateleira(String prateleiraID, int capacidade, int ocupacao) {
         this.prateleiraID = prateleiraID;

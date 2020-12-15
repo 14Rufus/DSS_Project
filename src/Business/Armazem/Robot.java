@@ -2,15 +2,22 @@ package Business.Armazem;
 
 public class Robot {
     private String robotID;
-    private boolean disponibilidade;
+    private boolean disponivel;
     private boolean recolheu;
     private InfoTransporte infoTransporte;
 
     public Robot(String id, boolean disp, boolean recolheu, InfoTransporte infoTransporte) {
         robotID = id;
-        disponibilidade = disp;
+        disponivel = disp;
         this.recolheu = recolheu;
         this.infoTransporte = infoTransporte;
+    }
+
+    public Robot(String id) {
+        robotID = id;
+        disponivel = false;
+        this.recolheu = false;
+        this.infoTransporte = null;
     }
 
     public void setInfoTransporte(String qr,String tipo, String prat, String zona) {
@@ -29,12 +36,12 @@ public class Robot {
         this.robotID = robotID;
     }
 
-    public boolean isDisponibilidade() {
-        return disponibilidade;
+    public boolean isDisponivel() {
+        return disponivel;
     }
 
-    public void setDisponibilidade(boolean disponibilidade) {
-        this.disponibilidade = disponibilidade;
+    public void setDisponivel(boolean disponibilidade) {
+        this.disponivel = disponibilidade;
     }
 
     public boolean isPaleteRecolhida() {
