@@ -1,3 +1,5 @@
+package Armazem;
+
 import Armazem.InfoTransporte;
 import Armazem.Palete;
 import Armazem.Robot;

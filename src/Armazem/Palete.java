@@ -1,3 +1,5 @@
+package Armazem;
+
 public class Palete {
     private String qrCode;
     private String tipoMaterial;

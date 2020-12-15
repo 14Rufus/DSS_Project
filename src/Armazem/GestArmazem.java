@@ -1,3 +1,5 @@
+package Armazem;
+
 import java.util.Map;
 
 public class GestArmazem {
