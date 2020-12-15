@@ -10,23 +10,9 @@ import java.util.Set;
 public class RobotDAO implements Map<String, Robot> {
     private static RobotDAO singleton = null;
 
-    private static final String USERNAME = "jfc"; //TODO: alterar
-    private static final String PASSWORD = "jfc"; //TODO: alterar
-    private static final String CREDENTIALS = "?user="+USERNAME+"&password="+PASSWORD;
-    private static final String DATABASE = "localhost:3306/sgs";
-
     private RobotDAO() {
-//        Driver é carregado automaticamente quando se abre uma conexão
-//        try {
-//            Class.forName("org.mariadb.jdbc.Driver");
-//        }
-//        catch (ClassNotFoundException e) {
-//            // Driver não disponível
-//            e.printStackTrace();
-//            throw new NullPointerException(e.getMessage());
-//        }
         try (Connection conn =
-                     DriverManager.getConnection("jdbc:mysql://"+DATABASE+CREDENTIALS);
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS robots (" +
                     "RobotId varchar(10) NOT NULL PRIMARY KEY," +
@@ -79,7 +65,7 @@ public class RobotDAO implements Map<String, Robot> {
     public Robot get(Object key) {
         Robot p = null;
         try (Connection conn =
-                     DriverManager.getConnection("jdbc:mysql://"+DATABASE+CREDENTIALS);
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM robots WHERE RobotId='"+key+"'")) {
             if (rs.next()) {
@@ -94,7 +80,6 @@ public class RobotDAO implements Map<String, Robot> {
                 p = null;
             }
         } catch (SQLException e) {
-            // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
@@ -105,20 +90,16 @@ public class RobotDAO implements Map<String, Robot> {
     public Robot put(String key, Robot r) {
         System.out.println(r.toString());
         Robot res = null;
-        String s = "a";
-        int i1 = 0;
         InfoTransporte i = r.getInfoTransporte();
         try (Connection conn =
-                     DriverManager.getConnection("jdbc:mysql://"+DATABASE+CREDENTIALS);
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
-            System.out.println("aaa");
             if(i != null) {
-                stm.executeUpdate(
-                        "INSERT INTO robots VALUES ('" + r.getRobotID() + "','" + "0" + "', '" +
-                                i.getQrCode() + "', '" + i.getTipo() + "', '" + i.getPrateleira() + "', '" +
-                                i.getZonaID() + "', '" + r.isPaleteRecolhida() + "') " +
-                                "ON DUPLICATE KEY UPDATE Disponibilidade=Values(Disponibilidade), " + "QrCode=Values(QrCode)" +
-                                "Tipo=Values(Tipo)" + "Prateleira=Values(Prateleira)" + "ZonaID=Values(ZonaID)");
+                stm.executeUpdate("INSERT INTO robots VALUES ('" + r.getRobotID() + "','" + "0" + "', '" +
+                        i.getQrCode() + "', '" + i.getTipo() + "', '" + i.getPrateleira() + "', '" +
+                        i.getZonaID() + "', '" + r.isPaleteRecolhida() + "') " +
+                        "ON DUPLICATE KEY UPDATE Disponibilidade=Values(Disponibilidade), " + "QrCode=Values(QrCode)" +
+                        "Tipo=Values(Tipo)" + "Prateleira=Values(Prateleira)" + "ZonaID=Values(ZonaID)");
             }
             else
                 stm.executeUpdate("INSERT INTO robots VALUES ('"+r.getRobotID()+"',b'0', '"+ null+"', '"+
@@ -134,11 +115,10 @@ public class RobotDAO implements Map<String, Robot> {
     public Robot remove(Object key) {
         Robot t = this.get(key);
         try (Connection conn =
-                     DriverManager.getConnection("jdbc:mysql://"+DATABASE+CREDENTIALS);
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
             stm.executeUpdate("DELETE FROM robots WHERE RobotId='"+key+"'");
         } catch (Exception e) {
-            // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
@@ -164,14 +144,13 @@ public class RobotDAO implements Map<String, Robot> {
     public Collection<Robot> values() {
         Collection<Robot> col = new HashSet<>();
         try (Connection conn =
-                     DriverManager.getConnection("jdbc:mysql://"+DATABASE+CREDENTIALS);
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT RobotId FROM robots")) {
             while (rs.next()) {
                 col.add(this.get(rs.getString("RobotId")));
             }
         } catch (Exception e) {
-            // Database error!
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
