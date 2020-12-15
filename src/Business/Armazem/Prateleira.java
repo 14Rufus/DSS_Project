@@ -1,4 +1,4 @@
-package Model.Armazem;
+package Business.Armazem;
 
 import java.util.HashMap;
 import java.util.Map;

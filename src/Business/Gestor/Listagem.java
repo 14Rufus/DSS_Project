@@ -1,4 +1,4 @@
-package Model.Gestor;
+package Business.Gestor;
 
 public class Listagem {
 }

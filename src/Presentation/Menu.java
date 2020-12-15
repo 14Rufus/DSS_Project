@@ -1,4 +1,4 @@
-package Controller;
+package Presentation;
 
 public class Menu {
 }

@@ -1,4 +1,7 @@
-package Model.Armazem;
+package Data;
+
+import Business.Armazem.InfoTransporte;
+import Business.Armazem.Robot;
 
 import java.sql.*;
 import java.util.Collection;

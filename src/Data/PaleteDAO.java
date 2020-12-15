@@ -1,4 +1,4 @@
-package Model.Armazem;
+package Data;
 
 public class PaleteDAO {
 }
