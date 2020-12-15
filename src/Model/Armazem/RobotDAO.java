@@ -1,8 +1,4 @@
-package Armazem;
-
-import Armazem.InfoTransporte;
-import Armazem.Palete;
-import Armazem.Robot;
+package Model.Armazem;
 
 import java.sql.*;
 import java.util.Collection;

@@ -1,11 +1,12 @@
+package Model.Armazem;
+
 import java.util.Collection;
-import java.util.Map;
 import java.util.TreeSet;
 
-public class ZonaEntrega extends Zona{
+public class ZonaRececao extends Zona{
     private Collection<Palete> paletes;
 
-    public ZonaEntrega(String zonaID) {
+    public ZonaRececao(String zonaID) {
         super(zonaID);
         paletes = new TreeSet<>();
     }

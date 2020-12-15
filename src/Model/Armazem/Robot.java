@@ -1,4 +1,4 @@
-package Armazem;
+package Model.Armazem;
 
 public class Robot {
     private String robotID;

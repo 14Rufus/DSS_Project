@@ -1,3 +1,5 @@
+package Model.Armazem;
+
 import java.util.Map;
 
 public class ZonaArmazenamento extends Zona{

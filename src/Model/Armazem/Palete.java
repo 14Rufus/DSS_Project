@@ -1,4 +1,4 @@
-package Armazem;
+package Model.Armazem;
 
 public class Palete {
     private String qrCode;

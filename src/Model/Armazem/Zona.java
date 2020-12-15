@@ -1,3 +1,5 @@
+package Model.Armazem;
+
 public class Zona {
     private String zonaID;
 
