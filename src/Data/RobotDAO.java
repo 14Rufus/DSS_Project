@@ -30,7 +30,7 @@ public class RobotDAO implements Map<String, Robot> {
              Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS robots (" +
                     "RobotId varchar(10) NOT NULL PRIMARY KEY," +
-                    "Disponivel varchar(100) DEFAULT NULL," +
+                    "Disponivel bit DEFAULT NULL," +
                     "QrCode varchar(10) DEFAULT NULL," +
                     "Tipo varchar(10) DEFAULT NULL," +
                     "Prateleira varchar(10) DEFAULT NULL," +
@@ -83,20 +83,15 @@ public class RobotDAO implements Map<String, Robot> {
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM robots WHERE RobotId='"+key+"'")) {
             if (rs.next()) {
-                String sql = "SELECT * FROM robots WHERE RobotId='"+(String)key+"'";
-                try (ResultSet rsa = stm.executeQuery(sql)) {
-                    if (rsa.next()) {
-                        InfoTransporte i = new InfoTransporte(rsa.getString("QrCode"),
-                                rsa.getString("Tipo"),
-                                rsa.getString("Prateleira"),
-                                rsa.getString("ZonaID"));
-                        p = new Robot(rs.getString("RobotId"),
-                                rsa.getBoolean("Disponivel"),
-                                rsa.getBoolean("Recolheu"),i);
-                    } else {
-                        p = null;
-                    }
-                }
+                InfoTransporte i = new InfoTransporte(rs.getString("QrCode"),
+                        rs.getString("Tipo"),
+                        rs.getString("Prateleira"),
+                        rs.getString("ZonaID"));
+                p = new Robot(rs.getString("RobotId"),
+                        rs.getBoolean("Disponivel"),
+                        rs.getBoolean("Recolheu"),i);
+            } else {
+                p = null;
             }
         } catch (SQLException e) {
             // Database error!
@@ -117,16 +112,17 @@ public class RobotDAO implements Map<String, Robot> {
                      DriverManager.getConnection("jdbc:mysql://"+DATABASE+CREDENTIALS);
              Statement stm = conn.createStatement()) {
             System.out.println("aaa");
-            if(i != null)
+            if(i != null) {
                 stm.executeUpdate(
-                    "INSERT INTO robots VALUES ('"+r.getRobotID()+"','"+r.isDisponivel()+"', '"+
-                            i.getQrCode()+ "', '"+ i.getTipo()+"', '"+ i.getPrateleira()+"', '"+
-                            i.getZonaID()+"', '"+ r.isPaleteRecolhida()+"') "+
-                            "ON DUPLICATE KEY UPDATE Disponibilidade=Values(Disponibilidade), " + "QrCode=Values(QrCode)" +
-                            "Tipo=Values(Tipo)" + "Prateleira=Values(Prateleira)" + "ZonaID=Values(ZonaID)");
+                        "INSERT INTO robots VALUES ('" + r.getRobotID() + "','" + "0" + "', '" +
+                                i.getQrCode() + "', '" + i.getTipo() + "', '" + i.getPrateleira() + "', '" +
+                                i.getZonaID() + "', '" + r.isPaleteRecolhida() + "') " +
+                                "ON DUPLICATE KEY UPDATE Disponibilidade=Values(Disponibilidade), " + "QrCode=Values(QrCode)" +
+                                "Tipo=Values(Tipo)" + "Prateleira=Values(Prateleira)" + "ZonaID=Values(ZonaID)");
+            }
             else
-                stm.executeUpdate("INSERT INTO robots VALUES ('"+r.getRobotID()+"','"+ r.getRobotID()+"', '"+ "null"+"', '"+
-                                "null"+"','"+"null"+"', '"+"null"+"', '"+"null"+"') ");
+                stm.executeUpdate("INSERT INTO robots VALUES ('"+r.getRobotID()+"',b'0', '"+ null+"', '"+
+                                null+"','"+null+"', '"+null+"', b'0') ");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
