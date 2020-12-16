@@ -3,14 +3,12 @@ package Business.Armazem;
 public class Palete {
     private String qrCode;
     private String tipoMaterial;
-    private int zona;
-    private String prateleira;
+    private int prateleira;
     private String zonaID;
 
-    public Palete(String qrCode, String tipoMaterial,int z,String prat,String zID) {
+    public Palete(String qrCode, String tipoMaterial,int prat,String zID) {
         this.qrCode = qrCode;
         this.tipoMaterial = tipoMaterial;
-        zona = z;
         prateleira = prat;
         zonaID = zID;
     }
@@ -23,11 +21,7 @@ public class Palete {
         return tipoMaterial;
     }
 
-    public int getZona() {
-        return zona;
-    }
-
-    public String getPrateleira() {
+    public int getPrateleira() {
         return prateleira;
     }
 

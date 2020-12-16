@@ -6,4 +6,8 @@ public class Zona {
     public Zona(String zonaID) {
         this.zonaID = zonaID;
     }
+
+    public String getZonaID() {
+        return zonaID;
+    }
 }

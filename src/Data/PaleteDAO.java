@@ -17,8 +17,7 @@ public class PaleteDAO implements Map<String, Palete> {
             String sql = "CREATE TABLE IF NOT EXISTS paletes (" +
                     "QrCode varchar(10) NOT NULL PRIMARY KEY," +
                     "TipoMaterial varchar(30) DEFAULT NUL," +
-                    "Localizacao int(3) DEFAULT NULL," +
-                    "Prateleira varchar(10) DEFAULT NULL," +
+                    "Prateleira int DEFAULT NULL," +
                     "ZonaID varchar(10) DEFAULT NULL)";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
@@ -57,8 +56,7 @@ public class PaleteDAO implements Map<String, Palete> {
             if (rs.next()) {
                 p = new Palete(rs.getString("QrCode"),
                         rs.getString("TipoMaterial"),
-                        rs.getInt("Localizacao"),
-                        rs.getString("Prateleira"),
+                        rs.getInt("Prateleira"),
                         rs.getString("Zona"));
             } else {
                 p = null;
@@ -77,8 +75,7 @@ public class PaleteDAO implements Map<String, Palete> {
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
 
-            stm.executeUpdate("INSERT INTO paletes VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"','"+
-                    p.getZona()+"','"+p.getPrateleira()+"','"+p.getZonaID()+"')");
+            stm.executeUpdate("INSERT INTO paletes VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"','"+p.getPrateleira()+"','"+p.getZonaID()+"')");
 
         } catch (SQLException e) {
             e.printStackTrace();
