@@ -1,25 +1,23 @@
 package Data;
-
-import Business.Armazem.Palete;
+import Business.Gestor.Gestor;
 
 import java.sql.*;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class PaleteDAO implements Map<String, Palete> {
-    private static PaleteDAO singleton = null;
+public class GestorDAO implements Map<String, Gestor> {
+    private static GestorDAO singleton = null;
 
-    private PaleteDAO() {
+    private GestorDAO() {
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
-            String sql = "CREATE TABLE IF NOT EXISTS paletes (" +
-                    "QrCode varchar(10) NOT NULL PRIMARY KEY," +
-                    "TipoMaterial varchar(30) DEFAULT NUL," +
-                    "Localizacao int(3) DEFAULT NULL," +
-                    "Prateleira varchar(10) DEFAULT NULL," +
-                    "ZonaID varchar(10) DEFAULT NULL)";
+            String sql = "CREATE TABLE IF NOT EXISTS gestores (" +
+                    "ID int NOT NULL PRIMARY KEY," +
+                    "Nome varchar(40) DEFAULT NULL," +
+                    "Password int(40) DEFAULT NULL," +
+                    "Online bit DEFAULT NULL,";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,18 +46,17 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     @Override
-    public Palete get(Object key) {
-        Palete p = null;
+    public Gestor get(Object key) {
+        Gestor p = null;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM paletes WHERE QrCode='"+key+"'")) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM gestores WHERE ID='"+key+"'")) {
             if (rs.next()) {
-                p = new Palete(rs.getString("QrCode"),
-                        rs.getString("TipoMaterial"),
-                        rs.getInt("Localizacao"),
-                        rs.getString("Prateleira"),
-                        rs.getString("Zona"));
+                p = new Gestor(rs.getInt("ID"),
+                        rs.getString("Nome"),
+                        rs.getString("Password"),
+                        rs.getBoolean("Online"));
             } else {
                 p = null;
             }
@@ -71,14 +68,14 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     @Override
-    public Palete put(String key, Palete p) {
-        Palete res = null;
+    public Gestor put(String key, Gestor p) {
+        Gestor res = null;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
 
-            stm.executeUpdate("INSERT INTO paletes VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"','"+
-                    p.getZona()+"','"+p.getPrateleira()+"','"+p.getZonaID()+"')");
+            stm.executeUpdate("INSERT INTO paletes VALUES ('"+p.getId()+"','"+p.getNome()+"','"+
+                    p.getPassword()+"','"+p.isOnline()+"' ");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -89,12 +86,12 @@ public class PaleteDAO implements Map<String, Palete> {
 
 
     @Override
-    public Palete remove(Object key) {
+    public Gestor remove(Object key) {
         return null;
     }
 
     @Override
-    public void putAll(Map<? extends String, ? extends Palete> m) {
+    public void putAll(Map<? extends String, ? extends Gestor> m) {
 
     }
 
@@ -109,12 +106,12 @@ public class PaleteDAO implements Map<String, Palete> {
     }
 
     @Override
-    public Collection<Palete> values() {
+    public Collection<Gestor> values() {
         return null;
     }
 
     @Override
-    public Set<Entry<String, Palete>> entrySet() {
+    public Set<Entry<String, Gestor>> entrySet() {
         return null;
     }
 }
