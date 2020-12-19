@@ -3,10 +3,10 @@ package Business.Armazem;
 public class InfoTransporte {
     private String qrCode;
     private String tipo;
-    private String prateleira;
+    private int prateleira;
     private String zonaID;
 
-    public InfoTransporte(String qr, String t, String prat, String zona) {
+    public InfoTransporte(String qr, String t, int prat, String zona) {
         qrCode = qr;
         tipo = t;
         prateleira = prat;
@@ -29,11 +29,11 @@ public class InfoTransporte {
         this.tipo = tipo;
     }
 
-    public String getPrateleira() {
+    public int getPrateleira() {
         return prateleira;
     }
 
-    public void setPrateleira(String prateleira) {
+    public void setPrateleira(int prateleira) {
         this.prateleira = prateleira;
     }
 

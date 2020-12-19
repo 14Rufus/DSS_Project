@@ -20,7 +20,7 @@ public class Robot {
         this.infoTransporte = null;
     }
 
-    public void setInfoTransporte(String qr,String tipo, String prat, String zona) {
+    public void setInfoTransporte(String qr,String tipo, int prat, String zona) {
         infoTransporte = new InfoTransporte(qr,tipo,prat,zona);
     }
 

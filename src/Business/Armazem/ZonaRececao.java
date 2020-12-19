@@ -21,4 +21,9 @@ public class ZonaRececao extends Zona {
         Palete palete = new Palete(qrCode, tipoMaterial, 0, super.getZonaID());
         paletes.put(qrCode, palete);
     }
+
+    public Palete getPalete (){
+        return paletes.get(0);
+    }
+
 }

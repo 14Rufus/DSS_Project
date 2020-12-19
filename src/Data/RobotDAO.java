@@ -19,7 +19,7 @@ public class RobotDAO implements Map<String, Robot> {
                     "Disponivel bit DEFAULT NULL," +
                     "QrCode varchar(10) DEFAULT NULL," +
                     "Tipo varchar(10) DEFAULT NULL," +
-                    "Prateleira varchar(10) DEFAULT NULL," +
+                    "Prateleira int DEFAULT NULL," +
                     "ZonaID varchar(10) DEFAULT NULL," +
                     "Recolheu bit DEFAULT NULL)";
             stm.executeUpdate(sql);
@@ -71,7 +71,7 @@ public class RobotDAO implements Map<String, Robot> {
             if (rs.next()) {
                 InfoTransporte i = new InfoTransporte(rs.getString("QrCode"),
                         rs.getString("Tipo"),
-                        rs.getString("Prateleira"),
+                        rs.getInt("Prateleira"),
                         rs.getString("ZonaID"));
                 p = new Robot(rs.getString("RobotId"),
                         rs.getBoolean("Disponivel"),

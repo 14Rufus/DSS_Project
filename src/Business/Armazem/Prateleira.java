@@ -32,4 +32,9 @@ public class Prateleira {
     public void addPalete (String qrCode, String tipoMaterial, String zona) {
         paletes.put(qrCode, new Palete(qrCode, tipoMaterial, prateleiraID, zona));
     }
+
+    public int getEspacoLivre(){
+        return (capacidade - ocupacao);
+    }
+
 }

@@ -20,8 +20,21 @@ public class ZonaArmazenamento extends Zona {
         return b;
     }
 
+    public int escolhePrateleira(){
+        Prateleira prateleira = null;
+        int max = 0;
+        for(Prateleira p : prateleiras.values()){
+            if(p.getEspacoLivre() > max){
+                prateleira = p;
+                max = p.getEspacoLivre();
+            }
+        }
+        return prateleira.getPrateleiraID();
+    }
+
 //    -------------------------
 //    falta definir em qual prateleira colocar
     public void registaPalete (String qrCode, String tipoMaterial) {
+
     }
 }
