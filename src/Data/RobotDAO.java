@@ -18,7 +18,6 @@ public class RobotDAO implements Map<String, Robot> {
                     "RobotId varchar(10) NOT NULL PRIMARY KEY," +
                     "Disponivel bit DEFAULT NULL," +
                     "QrCode varchar(10) DEFAULT NULL," +
-                    "Tipo varchar(10) DEFAULT NULL," +
                     "Prateleira int DEFAULT NULL," +
                     "ZonaID varchar(10) DEFAULT NULL," +
                     "Recolheu bit DEFAULT NULL)";
@@ -70,7 +69,6 @@ public class RobotDAO implements Map<String, Robot> {
              ResultSet rs = stm.executeQuery("SELECT * FROM robots WHERE RobotId='"+key+"'")) {
             if (rs.next()) {
                 InfoTransporte i = new InfoTransporte(rs.getString("QrCode"),
-                        rs.getString("Tipo"),
                         rs.getInt("Prateleira"),
                         rs.getString("ZonaID"));
                 p = new Robot(rs.getString("RobotId"),
@@ -96,14 +94,14 @@ public class RobotDAO implements Map<String, Robot> {
              Statement stm = conn.createStatement()) {
             if(i != null) {
                 stm.executeUpdate("INSERT INTO robots VALUES ('" + r.getRobotID() + "','" + "0" + "', '" +
-                        i.getQrCode() + "', '" + i.getTipo() + "', '" + i.getPrateleira() + "', '" +
+                        i.getQrCode() + "', '" + i.getPrateleira() + "', '" +
                         i.getZonaID() + "', '" + r.isPaleteRecolhida() + "') " +
                         "ON DUPLICATE KEY UPDATE Disponibilidade=Values(Disponibilidade), " + "QrCode=Values(QrCode)" +
                         "Tipo=Values(Tipo)" + "Prateleira=Values(Prateleira)" + "ZonaID=Values(ZonaID)");
             }
             else
-                stm.executeUpdate("INSERT INTO robots VALUES ('"+r.getRobotID()+"',b'0', '"+ null+"', '"+
-                                null+"','"+null+"', '"+null+"', b'0') ");
+                stm.executeUpdate("INSERT INTO robots VALUES ('"+r.getRobotID()+"',b'0', '"+
+                                null+"','"+0+"', '"+null+"', b'0') ");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
@@ -161,4 +159,10 @@ public class RobotDAO implements Map<String, Robot> {
     public Set<Entry<String, Robot>> entrySet() {
         return null;
     }
+
+    /*
+    public void setInfoTransporte(String qr, int prat, String zona) {
+        infoTransporte = new InfoTransporte(qr,prat,zona);
+    }
+    */
 }

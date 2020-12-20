@@ -20,8 +20,8 @@ public class Robot {
         this.infoTransporte = null;
     }
 
-    public void setInfoTransporte(String qr,String tipo, int prat, String zona) {
-        infoTransporte = new InfoTransporte(qr,tipo,prat,zona);
+    public void setInfoTransporte(String qr, int prat, String zona) {
+        infoTransporte = new InfoTransporte(qr,prat,zona);
     }
 
     public InfoTransporte getInfoTransporte() {
@@ -46,5 +46,28 @@ public class Robot {
 
     public boolean isPaleteRecolhida() {
         return recolheu;
+    }
+
+    public void setRecolheu(boolean recolheu) {
+        this.recolheu = recolheu;
+    }
+
+    public String getPalete(){
+        return infoTransporte.getQrCode();
+    }
+
+    public String getZonaID(){
+        return infoTransporte.getZonaID();
+    }
+
+    public int getPrateleira(){
+        return infoTransporte.getPrateleira();
+    }
+
+    public String getQrCode(){
+        if(infoTransporte != null)
+            return infoTransporte.getQrCode();
+        else
+            return null;
     }
 }

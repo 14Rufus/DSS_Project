@@ -34,7 +34,7 @@ public class ZonaArmazenamento extends Zona {
 
 //    -------------------------
 //    falta definir em qual prateleira colocar
-    public void registaPalete (String qrCode, String tipoMaterial) {
-
+    public void arrumaPalete (String zonaID,int prateleira,String qrCode, String tipoMaterial) {
+        prateleiras.get(prateleira).addPalete(qrCode,tipoMaterial,zonaID);
     }
 }

@@ -1,4 +1,4 @@
-package Business.Armazem;
+package Business.Gestor;
 
 public class Localizacao {
     private String prateleira;

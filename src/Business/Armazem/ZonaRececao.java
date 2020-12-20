@@ -22,8 +22,12 @@ public class ZonaRececao extends Zona {
         paletes.put(qrCode, palete);
     }
 
-    public Palete getPalete (){
-        return paletes.get(0);
+    public Boolean existePalete (String qrCode){
+        return paletes.containsKey(qrCode);
+    }
+
+    public void recolhePalete(String qrCode){
+        paletes.get(qrCode).setZonaID(null);
     }
 
 }

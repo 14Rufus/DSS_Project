@@ -2,13 +2,11 @@ package Business.Armazem;
 
 public class InfoTransporte {
     private String qrCode;
-    private String tipo;
     private int prateleira;
     private String zonaID;
 
-    public InfoTransporte(String qr, String t, int prat, String zona) {
+    public InfoTransporte(String qr, int prat, String zona) {
         qrCode = qr;
-        tipo = t;
         prateleira = prat;
         zonaID = zona;
     }
@@ -19,14 +17,6 @@ public class InfoTransporte {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public int getPrateleira() {

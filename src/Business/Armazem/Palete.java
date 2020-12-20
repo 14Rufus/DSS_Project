@@ -28,4 +28,8 @@ public class Palete {
     public String getZonaID() {
         return zonaID;
     }
+
+    public void setZonaID(String zonaID) {
+        this.zonaID = zonaID;
+    }
 }
