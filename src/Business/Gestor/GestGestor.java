@@ -19,4 +19,8 @@ public class GestGestor {
         }
         return list;
     }
+
+    public boolean validaLoginGestor(int id, String password) {
+        return gestor.validaCredenciaisGestor(id, password);
+    }
 }

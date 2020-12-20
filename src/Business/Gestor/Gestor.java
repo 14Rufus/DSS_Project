@@ -1,5 +1,7 @@
 package Business.Gestor;
 
+import java.util.Objects;
+
 public class Gestor {
     private int id;
     private String nome;
@@ -43,5 +45,17 @@ public class Gestor {
 
     public void setOnline(boolean online) {
         this.online = online;
+    }
+
+    public boolean validaCredenciaisGestor(int id, String password) {
+        return (id == this.id && this.password.equals(password));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gestor gestor = (Gestor) o;
+        return id == gestor.id && online == gestor.online && nome.equals(gestor.nome) && password.equals(gestor.password);
     }
 }

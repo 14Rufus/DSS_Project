@@ -32,4 +32,6 @@ public class SGS implements ISGS {
     public List<String> consultarListagem() {
         return gestGestor.consultarL();
     }
+
+    public boolean validaLoginGestor (int id, String password) { return gestGestor.validaLoginGestor(id, password); }
 }
