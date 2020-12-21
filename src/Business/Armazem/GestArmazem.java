@@ -12,6 +12,8 @@ public class GestArmazem implements IGestArmazem {
 
     public GestArmazem() {
         this.robots = RobotDAO.getInstance();
+        zonaRececao = new ZonaRececao("Receção");
+        zonaArmazenamento = new ZonaArmazenamento("z1","a");
     }
 
     public void addRobot(String robotID) {
@@ -36,9 +38,8 @@ public class GestArmazem implements IGestArmazem {
     }
 
     public void registaPalete (String qrCode, String tipoMaterial) {
-        if (validaPalete(qrCode)) {
+        if (validaPalete(qrCode))
             zonaRececao.acrescentaPalete(qrCode,tipoMaterial);
-        }
     }
     // ----------------------------
 
@@ -58,11 +59,11 @@ public class GestArmazem implements IGestArmazem {
 
 
     public void notRobot(String qrCode){
-        if (!existePaleteRececao(qrCode) || getRobotDisponivel() == null){
-            System.out.println("robot/palete não disponivel");
+        Robot r = getRobotDisponivel();
+        if (!existePaleteRececao(qrCode) || r == null){
+            System.out.println("robot/palete não disponivel");//print na view
         }
         else{
-            Robot r = getRobotDisponivel();
             r.setInfoTransporte(qrCode, zonaArmazenamento.escolhePrateleira(),zonaArmazenamento.getZonaID());
             r.setDisponivel(false);
         }
@@ -70,24 +71,36 @@ public class GestArmazem implements IGestArmazem {
 
     //  ---------------------------------------------------------
 
-    public void recolheP(String robotID){
+    public String recolheP(String robotID){
         Robot r = robots.get(robotID);
+        if(r == null)
+            return null;
 
-        zonaRececao.recolhePalete(r.getPalete());
+        String qrCode = r.getQrCode();
+        if(qrCode == null)
+            return null;
+
+        zonaRececao.recolhePalete(qrCode);
         r.setRecolheu(true);
 
-        //alterar localizacao
+        return qrCode + ".-1." + robotID;
     }
 
-    public void entregaP(String robotID) {
+    public String entregaP(String robotID) {
         Robot r = robots.get(robotID);
+        if(r == null)
+            return null;
 
-        String zona = r.getZonaID();
+        String zona = r.getZonaID(), qrCode = r.getQrCode();
         int prateleira = r.getPrateleira();
-        zonaArmazenamento.arrumaPalete(zona,prateleira,r.getQrCode(),r.getQrCode()); //ver como passar a palete para zonaArmazenamento
+        if(zona == null || prateleira == -1)
+            return null;
+
+        zonaArmazenamento.arrumaPalete(zona,prateleira,qrCode,qrCode); //ver como passar a palete para zonaArmazenamento
         r.setDisponivel(true);
         r.setRecolheu(false);
+        r.removeInfo();
 
-        //alterar localizacao
+        return qrCode + "." + prateleira + "." + zona;
     }
 }

@@ -16,7 +16,7 @@ public class PaleteDAO implements Map<String, Palete> {
              Statement stm = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS paletes (" +
                     "QrCode varchar(10) NOT NULL PRIMARY KEY," +
-                    "TipoMaterial varchar(30) DEFAULT NUL," +
+                    "TipoMaterial varchar(30) DEFAULT NULL," +
                     "Prateleira int DEFAULT NULL," +
                     "ZonaID varchar(10) DEFAULT NULL)";
             stm.executeUpdate(sql);
@@ -24,6 +24,18 @@ public class PaleteDAO implements Map<String, Palete> {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
+    }
+
+    /**
+     * Implementação do padrão Singleton
+     *
+     * @return devolve a instância única desta classe
+     */
+    public static PaleteDAO getInstance() {
+        if (PaleteDAO.singleton == null) {
+            PaleteDAO.singleton = new PaleteDAO();
+        }
+        return PaleteDAO.singleton;
     }
 
     @Override

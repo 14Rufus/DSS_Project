@@ -1,10 +1,15 @@
 package Presentation;
 import Business.Armazem.GestArmazem;
+import Business.Armazem.IGestArmazem;
+import Business.ISGS;
+import Business.SGS;
+
 import java.util.Scanner;
 
 public class TextUI {
     // O model tem a 'lógica de negócio'.
     //private ITurmasFacade model;
+    private ISGS model2;
     private GestArmazem model;
 
     // Menus da aplicação
@@ -23,9 +28,11 @@ public class TextUI {
         String[] opcoes = {
                 "listar robots",
                 "add robot",
-                "rem robot"};
+                "rem robot",
+                "Registar palete"};
         this.menu = new Menu(opcoes);
         this.model = new GestArmazem();
+        this.model2 = new SGS();
         scin = new Scanner(System.in);
     }
 
@@ -44,6 +51,9 @@ public class TextUI {
                     break;
                 case 3:
                     remRobot();
+                    break;
+                case 4:
+                    registaPalete();
                     break;
             }
         } while (menu.getOpcao()!=0); // A opção 0 é usada para sair do menu.
@@ -77,6 +87,17 @@ public class TextUI {
             System.out.println("ID robot: ");
             String rid = scin.nextLine();
             model.remRobot(rid);
+        }
+        catch (NullPointerException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void registaPalete() {
+        try {
+            System.out.println("Qr-Code da palete: ");
+            String rid = scin.nextLine();
+            model2.registarPalete(rid,"Materia Pericivel");
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

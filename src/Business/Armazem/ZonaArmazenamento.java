@@ -5,18 +5,21 @@ import java.util.Map;
 
 public class ZonaArmazenamento extends Zona {
     private String tipoZona;
-    private Map<String, Prateleira> prateleiras;
+    private Map<Integer, Prateleira> prateleiras;
 
     public ZonaArmazenamento(String zonaID,String tipo) {
         super(zonaID);
         tipoZona = tipo;
         prateleiras = new HashMap<>();
+        for(int i = 1;i<=5;i++)
+            prateleiras.put(i,new Prateleira(i));
     }
 
     public boolean isPaleteValida (String qrCode) {
-        boolean b = false;
+        boolean b = true;
         for (Prateleira p: prateleiras.values())
-            b = b || p.isPaleteValida(qrCode);
+            if(!p.isPaleteValida(qrCode))
+                b = false;
         return b;
     }
 

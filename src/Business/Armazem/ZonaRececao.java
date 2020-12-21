@@ -1,4 +1,6 @@
 package Business.Armazem;
+import Data.PaleteDAO;
+
 import java.util.Collection;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,11 +12,11 @@ public class ZonaRececao extends Zona {
 
     public ZonaRececao(String zonaID) {
         super(zonaID);
-        paletes = new HashMap<>();
+        paletes = PaleteDAO.getInstance();
     }
 
     public boolean isPaleteValida (String qrCode) {
-        return paletes.containsKey(qrCode);
+        return !paletes.containsKey(qrCode);
     }
 
     public void acrescentaPalete (String qrCode, String tipoMaterial) {

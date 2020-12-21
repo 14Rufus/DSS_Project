@@ -68,12 +68,18 @@ public class RobotDAO implements Map<String, Robot> {
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM robots WHERE RobotId='"+key+"'")) {
             if (rs.next()) {
-                InfoTransporte i = new InfoTransporte(rs.getString("QrCode"),
-                        rs.getInt("Prateleira"),
-                        rs.getString("ZonaID"));
-                p = new Robot(rs.getString("RobotId"),
+                if(rs.getString("QrCode") != "") {
+                    InfoTransporte i = new InfoTransporte(rs.getString("QrCode"),
+                            rs.getInt("Prateleira"),
+                            rs.getString("ZonaID"));
+                    p = new Robot(rs.getString("RobotId"),
+                            rs.getBoolean("Disponivel"),
+                            rs.getBoolean("Recolheu"), i);
+                }
+                else
+                    p = new Robot(rs.getString("RobotId"),
                         rs.getBoolean("Disponivel"),
-                        rs.getBoolean("Recolheu"),i);
+                        rs.getBoolean("Recolheu"), null);
             } else {
                 p = null;
             }
@@ -101,7 +107,7 @@ public class RobotDAO implements Map<String, Robot> {
             }
             else
                 stm.executeUpdate("INSERT INTO robots VALUES ('"+r.getRobotID()+"',b'0', '"+
-                                null+"','"+0+"', '"+null+"', b'0') ");
+                                ""+"','"+0+"', '"+""+"', b'0') ");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());

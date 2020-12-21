@@ -28,6 +28,8 @@ public class Robot {
         return infoTransporte;
     }
 
+    public void removeInfo(){infoTransporte = null;}
+
     public String getRobotID() {
         return robotID;
     }
@@ -52,16 +54,18 @@ public class Robot {
         this.recolheu = recolheu;
     }
 
-    public String getPalete(){
-        return infoTransporte.getQrCode();
-    }
-
     public String getZonaID(){
-        return infoTransporte.getZonaID();
+        if(infoTransporte != null)
+            return infoTransporte.getZonaID();
+        else
+            return null;
     }
 
     public int getPrateleira(){
-        return infoTransporte.getPrateleira();
+        if(infoTransporte != null)
+            return infoTransporte.getPrateleira();
+        else
+            return -1;
     }
 
     public String getQrCode(){
