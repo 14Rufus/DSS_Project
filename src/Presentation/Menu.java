@@ -66,4 +66,10 @@ public class Menu {
     public int getOpcao() {
         return this.op;
     }
+
+    public void executaLogin() {
+        System.out.println("\n *** Login *** ");
+
+        System.out.print("Introduza password: ");
+    }
 }

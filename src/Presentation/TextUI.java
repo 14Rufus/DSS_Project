@@ -43,6 +43,9 @@ public class TextUI {
      * Executa o menu principal e invoca o método correspondente à opção seleccionada.
      */
     public void run() {
+        if(!model2.isOnline()) {
+            introduzirPassword();
+        }
         do {
             menu.executa();
             switch (menu.getOpcao()) {
@@ -70,6 +73,17 @@ public class TextUI {
             }
         } while (menu.getOpcao()!=0); // A opção 0 é usada para sair do menu.
         System.out.println("Até breve!...");
+        model2.setOnline(false);
+    }
+
+    private void introduzirPassword() {
+        String pass;
+        do {
+            menu.executaLogin();
+            pass = scin.nextLine();
+        } while(!model2.validaLoginGestor(pass));
+
+        model2.setOnline(true);
     }
 
     private void trataListarRobots() {

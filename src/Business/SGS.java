@@ -2,6 +2,7 @@ package Business;
 import Business.Armazem.GestArmazem;
 import Business.Armazem.IGestArmazem;
 import Business.Gestor.GestGestor;
+import Business.Gestor.IGestGestor;
 
 import java.util.List;
 
@@ -41,5 +42,13 @@ public class SGS implements ISGS {
         return gestGestor.consultarL();
     }
 
-    public boolean validaLoginGestor (int id, String password) { return gestGestor.validaLoginGestor(id, password); }
+    public boolean isOnline() {
+        return gestGestor.isOnline();
+    }
+
+    public void setOnline(boolean online) {
+        gestGestor.setOnline(online);
+    }
+
+    public boolean validaLoginGestor (String password) { return gestGestor.validaLoginGestor(password); }
 }
