@@ -26,8 +26,8 @@ public class SGS implements ISGS {
     public void recolherPalete(String robotID){
         String l;
         l = gestArmazem.recolheP(robotID);
-        if(l != null)
-            gestGestor.addLocalizacao(l);
+        //if(l != null)
+            //gestGestor.addLocalizacao(l);
     }
 
     public void entregarPalete(String robotID){

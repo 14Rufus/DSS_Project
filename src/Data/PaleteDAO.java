@@ -17,7 +17,7 @@ public class PaleteDAO implements Map<String, Palete> {
             String sql = "CREATE TABLE IF NOT EXISTS paletes (" +
                     "QrCode varchar(10) NOT NULL PRIMARY KEY," +
                     "TipoMaterial varchar(30) DEFAULT NULL," +
-                    "Prateleira int DEFAULT NULL," +
+                    "Prateleira int DEFAULT 0," +
                     "ZonaID varchar(10) DEFAULT NULL)";
             stm.executeUpdate(sql);
         } catch (SQLException e) {
@@ -50,7 +50,18 @@ public class PaleteDAO implements Map<String, Palete> {
 
     @Override
     public boolean containsKey(Object key) {
-        return false;
+        boolean r;
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs =
+                     stm.executeQuery("SELECT QrCode FROM paletes WHERE QrCode='"+key.toString()+"'")) {
+            r = rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return r;
     }
 
     @Override
@@ -69,7 +80,7 @@ public class PaleteDAO implements Map<String, Palete> {
                 p = new Palete(rs.getString("QrCode"),
                         rs.getString("TipoMaterial"),
                         rs.getInt("Prateleira"),
-                        rs.getString("Zona"));
+                        rs.getString("ZonaID"));
             } else {
                 p = null;
             }
@@ -87,7 +98,8 @@ public class PaleteDAO implements Map<String, Palete> {
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
 
-            stm.executeUpdate("INSERT INTO paletes VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"','"+p.getPrateleira()+"','"+p.getZonaID()+"')");
+            stm.executeUpdate("INSERT INTO paletes VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"',"+p.getPrateleira()+",'"+p.getZonaID()+"')" +
+                    "ON DUPLICATE KEY UPDATE TipoMaterial=Values(TipoMaterial), Prateleira=Values(Prateleira),ZonaID=Values(ZonaID)");
 
         } catch (SQLException e) {
             e.printStackTrace();

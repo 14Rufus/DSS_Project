@@ -1,3 +1,3 @@
-USE sgs;
-show TABLES;
-SELECT * FROM robots
+use sgs;
+show tables;
+select * from robots;

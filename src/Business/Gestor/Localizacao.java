@@ -1,15 +1,17 @@
 package Business.Gestor;
 
 public class Localizacao {
-    private String prateleira;
+    private int prateleira;
     private String zonaID;
+    private String robotID;
 
-    public Localizacao(String prateleira, String zonaID) {
+    public Localizacao(int prateleira, String zonaID) {
         this.prateleira = prateleira;
         this.zonaID = zonaID;
+        robotID = "";
     }
 
-    public String getPrateleira() {
+    public int getPrateleira() {
         return prateleira;
     }
 
@@ -17,7 +19,7 @@ public class Localizacao {
         return zonaID;
     }
 
-    public void setPrateleira(String prateleira) {
+    public void setPrateleira(int prateleira) {
         this.prateleira = prateleira;
     }
 

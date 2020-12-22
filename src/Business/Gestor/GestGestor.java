@@ -1,6 +1,8 @@
 package Business.Gestor;
 
 import Business.IGestGestor;
+import Data.GestorDAO;
+import Data.IGestorDAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +15,7 @@ public class GestGestor implements IGestGestor {
 
     public GestGestor() {
         listagem = new HashMap<>();
+        //gestor = new GestorDAO();
         gestor = new Gestor(1,"luis","luis",false);
     }
 
@@ -30,8 +33,9 @@ public class GestGestor implements IGestGestor {
 
     public void addLocalizacao(String l) {
         String [] list;
-        list = l.split(".");
-        System.out.println(list[0]+"  "+list[1]+"  "+list[2]);
-        listagem.putIfAbsent(list[0],new Localizacao(list[1],list[2]));
+        list = l.split(".",3);
+        System.out.println(list[0]);
+        //System.out.println(list[0]+"  "+list[1]+"  "+list[2]);
+        listagem.putIfAbsent(list[0],new Localizacao(0,list[2]));
     }
 }
