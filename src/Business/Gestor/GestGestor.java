@@ -1,9 +1,5 @@
 package Business.Gestor;
 
-import Business.IGestGestor;
-import Data.GestorDAO;
-import Data.IGestorDAO;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +23,8 @@ public class GestGestor implements IGestGestor {
         return list;
     }
 
-    public boolean validaLoginGestor(int id, String password) {
-        return gestor.validaCredenciaisGestor(id, password);
+    public boolean validaLoginGestor(String password) {
+        return gestor.validaCredenciaisGestor(password);
     }
 
     public void addLocalizacao(String l) {
@@ -37,5 +33,13 @@ public class GestGestor implements IGestGestor {
         System.out.println(list[0]);
         //System.out.println(list[0]+"  "+list[1]+"  "+list[2]);
         listagem.putIfAbsent(list[0],new Localizacao(0,list[2]));
+    }
+
+    public boolean isOnline() {
+        return gestor.isOnline();
+    }
+
+    public void setOnline(boolean online) {
+        gestor.setOnline(online);
     }
 }

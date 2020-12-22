@@ -8,4 +8,7 @@ public interface ISGS {
     void recolherPalete(String robotID);
     void entregarPalete(String robotID);
     List<String> consultarListagem();
+    boolean isOnline();
+    void setOnline(boolean online);
+    boolean validaLoginGestor (String password);
 }

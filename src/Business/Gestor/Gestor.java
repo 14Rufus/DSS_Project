@@ -47,8 +47,9 @@ public class Gestor {
         this.online = online;
     }
 
-    public boolean validaCredenciaisGestor(int id, String password) {
-        return (id == this.id && this.password.equals(password));
+    public boolean validaCredenciaisGestor(String password) {
+        System.out.println(this.password);
+        return (this.password.equals(password));
     }
 
     @Override
