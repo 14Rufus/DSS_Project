@@ -53,7 +53,8 @@ public class Robot {
      */
 
     public void setLocalizacao(String zona, int prat) {
-        this.localizacao = localizacao;
+        this.localizacao.setZonaID(zona);
+        this.localizacao.setPrateleira(prat);
     }
 
     /**

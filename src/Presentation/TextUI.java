@@ -103,7 +103,7 @@ public class TextUI {
             String qrCode = menu.lerString("Insira um Qr-Code: ");
             menu.notRobot(qrCode,model.notificarRobot(qrCode));
         }
-        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoExisteException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoExisteException | ArmazemCheioException e) {
             System.out.println(e.getMessage());
         }
     }
