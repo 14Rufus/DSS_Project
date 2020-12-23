@@ -27,6 +27,8 @@ public class RobotDAO {
 
     public Robot get(Object key) {
         Robot p = null;
+        Localizacao l = null;
+        InfoTransporte i = null;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
@@ -38,27 +40,31 @@ public class RobotDAO {
                 if(rs.getInt("Recolheu") == 1)
                     rec = true;
 
-                Localizacao l;
+                String id_rob = rs.getString("RobotID");
+                int id_loc = rs.getInt("Localizacao_idLocalizacao");
+
+                if(rs.getString("InfoTransporte_idInfoTransporte") != null) {
+                    ResultSet rsI = stm.executeQuery(
+                            "SELECT * FROM InfoTransporte WHERE idInfoTransporte=" + rs.getInt("InfoTransporte_idInfoTransporte") + " ");
+                    if (rsI.next()) {
+                        i = new InfoTransporte(rsI.getInt("idInfoTransporte"),
+                                rsI.getString("Palete_qrCode"),
+                                rsI.getInt("Prateleira_prateleiraID"));
+                    }
+                }
+
                 ResultSet rsL = stm.executeQuery(
-                        "SELECT * FROM Localizacao WHERE idLocalizacao="+rs.getInt("Localizacao_idLocalizacao")+" ");
-                //if(rsL.getString("Prateleira_prateleiraID") == null)
-                    l = new Localizacao
-                            (rsL.getInt("idLocalizacao"),0,rsL.getString("zonaID"));
-                //else
-                  //  l = new Localizacao
-                    //    (rsL.getInt("idLocalizacao"),rsL.getInt("Prateleira_prateleiraID"),rsL.getString("zonaID"));
+                        "SELECT * FROM Localizacao WHERE idLocalizacao="+id_loc+" ");
+                if(rsL.next()) {
+                    if (rsL.getString("Prateleira_prateleiraID") == null)
+                        l = new Localizacao
+                                (rsL.getInt("idLocalizacao"), 0, rsL.getString("zonaID"));
+                    else
+                        l = new Localizacao
+                                (rsL.getInt("idLocalizacao"), rsL.getInt("Prateleira_prateleiraID"), rsL.getString("zonaID"));
+                }
 
-                ResultSet rsI = stm.executeQuery(
-                        "SELECT * FROM InfoTransporte WHERE idInfoTransporte='"+rs.getInt("InfoTransporte_idInfoTransporte")+"'");
-                InfoTransporte i = null;
-
-                if(rs.getInt("InfoTransporte_idInfoTransporte") != 0)
-                    i = new InfoTransporte(rsI.getInt("idInfoTransporte"),
-                            rsI.getString("Palete_qrCode"),
-                            rsI.getInt("Prateleira_prateleiraID"));
-
-                p = new Robot(rs.getString("RobotID"),disp,rec,i,l);
-
+                p = new Robot(id_rob, disp, rec, i, l);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,7 +73,7 @@ public class RobotDAO {
         return p;
     }
 
-    public Robot put(String key, Robot r) {
+    public Robot put(Robot r) {
         Robot res = null;
         InfoTransporte i = r.getInfoTransporte();
         Localizacao l = r.getLocalizacao();
@@ -80,17 +86,29 @@ public class RobotDAO {
                 disp = 1;
             if(r.isPaleteRecolhida() == true)
                 rec = 1;
-            stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
-                    "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
 
-            stm.executeUpdate("INSERT INTO Robot VALUES ('" + r.getRobotID() + "'," + disp + "," + rec + ", " +
-                    i.getIdinfoTransporte() + ", " +l.getIdLocalizacao() + ") " +
-                    "ON DUPLICATE KEY UPDATE Disponivel=Values(Disponivel), InfoTransporte_idInfoTransporte=Values(InfoTransporte_idInfoTransporte)," +
-                    "Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao), Recolheu=Values(Recolheu)");
+            if(l.getPrateleira()==0)
+                stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+null+")" +
+                        "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
+            else
+                stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
+                        "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
 
-            if(i != null)
-                stm.executeUpdate("INSERT INTO InfoTransporte VALUES ("+i.getIdinfoTransporte()+",'"+i.getQrCode()+"', "+i.getPrateleira()+")" +
+            if(i != null) {
+                stm.executeUpdate("INSERT INTO InfoTransporte VALUES (" + i.getIdinfoTransporte() + ",'" + i.getQrCode() + "', " + i.getPrateleira() + ")" +
                         "ON DUPLICATE KEY UPDATE Palete_qrCode=Values(Palete_qrCode), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
+
+                stm.executeUpdate("INSERT INTO Robot VALUES ('" + r.getRobotID() + "'," + disp + "," + rec + ", " +
+                        i.getIdinfoTransporte() + ", " + l.getIdLocalizacao() + ") " +
+                        "ON DUPLICATE KEY UPDATE Disponivel=Values(Disponivel), InfoTransporte_idInfoTransporte=Values(InfoTransporte_idInfoTransporte)," +
+                        "Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao), Recolheu=Values(Recolheu)");
+            }
+            else {
+                stm.executeUpdate("INSERT INTO Robot VALUES ('" + r.getRobotID() + "'," + disp + "," + rec + ", " +
+                        null + ", " + l.getIdLocalizacao() + ") " +
+                        "ON DUPLICATE KEY UPDATE Disponivel=Values(Disponivel), InfoTransporte_idInfoTransporte=Values(InfoTransporte_idInfoTransporte)," +
+                        "Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao), Recolheu=Values(Recolheu)");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());

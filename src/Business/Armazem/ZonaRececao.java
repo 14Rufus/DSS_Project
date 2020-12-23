@@ -57,7 +57,8 @@ public class ZonaRececao extends Zona {
      * @param qrCode Código QR da Palete
      */
     public void recolhePalete(String qrCode){
-        paletes.get(qrCode).setZonaID(null);
+        Palete p = paletes.get(qrCode);
+        p.setZonaID(null);
+        paletes.put(p);
     }
-
 }

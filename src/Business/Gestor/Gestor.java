@@ -1,7 +1,5 @@
 package Business.Gestor;
 
-import java.util.Objects;
-
 public class Gestor {
     private int idGestor;
     private String nome;
