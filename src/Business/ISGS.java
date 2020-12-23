@@ -12,5 +12,5 @@ public interface ISGS {
     List<String> consultarListagem() throws ListagemVaziaException;
     boolean isOnline();
     void setOnline(boolean online);
-    boolean validaLoginGestor (String password);
+    boolean validaLoginGestor(String password);
 }

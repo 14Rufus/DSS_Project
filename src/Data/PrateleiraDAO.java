@@ -71,7 +71,7 @@ public class PrateleiraDAO {
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
 
-            ResultSet rs = stm.executeQuery("SELECT * FROM Prateleira WHERE Ocupacao < 5");
+            ResultSet rs = stm.executeQuery("SELECT MIN(Ocupacao) FROM Prateleira WHERE Ocupacao < 5");
 
             if(rs.next())
                 p = rs.getInt("prateleiraID");
