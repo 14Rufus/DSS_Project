@@ -49,10 +49,20 @@ public class ZonaRececao extends Zona {
     }
 
     /**
+     * Listagem das Paletes
      *
-     * @return
+     * @return Listagem das Paletes
      */
     public List<String> getListagem(){
         return paletes.listLocalizacoes();
+    }
+
+    /**
+     * Lista das Paletes por Notificar
+     *
+     * @return Lista das Paletes por Notifcar
+     */
+    public List<String> paletesPorNotificar() {
+        return paletes.paletesPorNotificar();
     }
 }

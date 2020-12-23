@@ -25,15 +25,6 @@ public class Localizacao {
     }
 
     /**
-     * Altera ID da Localização
-     *
-     * @param idLocalizacao novo ID da Localização
-     */
-    public void setIdLocalizacao(int idLocalizacao) {
-        this.idLocalizacao = idLocalizacao;
-    }
-
-    /**
      * Devolve a Prateleira da Localização
      *
      * @return  Inteiro que representa a Prateleira

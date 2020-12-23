@@ -26,7 +26,7 @@ public class GestArmazem implements IGestArmazem {
      * @param qrCode Código QR da Palete a ser verificada
      * @return Existência da Palete na Zona de Receção
      */
-    public boolean existePaleteRececao(String qrCode){
+    private boolean existePaleteRececao(String qrCode){
         return zonaRececao.existePalete(qrCode);
     }
 
@@ -48,7 +48,7 @@ public class GestArmazem implements IGestArmazem {
      * @param r Robot
      * @return  Distância a que o Robot se encontra
      */
-    public int distancia(Robot r) {
+    private int distancia(Robot r) {
         String zona = r.getLocZona();
         int prat = r.getLocPrat();
 
@@ -67,7 +67,7 @@ public class GestArmazem implements IGestArmazem {
      *
      * @return  Robot disponível
      */
-    public Robot getRobotDisponivel (){
+    private Robot getRobotDisponivel (){
         Robot r, res = null;
         int dist, min = Integer.MAX_VALUE;
         Iterator<Robot> it = robots.values().iterator();
@@ -88,7 +88,7 @@ public class GestArmazem implements IGestArmazem {
      *
      * @param qrCode Código QR da Palete a ser transportada
      */
-    public String notRobot(String qrCode) throws PaleteNaoExisteException, RobotNaoDisponivelException {
+    public String notRobot(String qrCode) throws PaleteNaoExisteException, RobotNaoDisponivelException, ArmazemCheioException {
         Robot r = getRobotDisponivel();
         if (!existePaleteRececao(qrCode))
             throw new PaleteNaoExisteException("A Palete não existe na zona de receção");
@@ -97,13 +97,16 @@ public class GestArmazem implements IGestArmazem {
             throw new RobotNaoDisponivelException("Não existem robots disponivel");
 
         int n = robots.sizeInfo();
-        r.setInfoTransporte(n + 1,qrCode, zonaArmazenamento.escolhePrateleira()); //ver quando n tem espaço
+        int p = zonaArmazenamento.escolhePrateleira();
+
+        if(p==0)
+            throw new ArmazemCheioException("A capacidade do armazém esgotou");
+
+        r.setInfoTransporte(n + 1,qrCode, p);
         r.setDisponivel(false);
         robots.put(r);
         return r.getRobotID();
     }
-
-    //  ---------------------------------------------------------
 
     /**
      * Recolher uma Palete
@@ -167,4 +170,45 @@ public class GestArmazem implements IGestArmazem {
         return l;
     }
 
+    /**
+     * Lista das Paletes por Notificar
+     *
+     * @return Lista das Paletes por Notifcar
+     */
+    public List<String> paletesPorNotificar() throws ListaPaletesPorNotificarException {
+        List<String> l = zonaRececao.paletesPorNotificar();
+
+        if(l.isEmpty())
+            throw new ListaPaletesPorNotificarException("Não existem Paletes paor notificar");
+
+        return l;
+    }
+
+    /**
+     * Lista dos Robots por Recolher
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorRecolher() throws ListaRobotsPorRecolherException {
+        List<String> l = robots.robotsPorRecolher();
+
+        if(l.isEmpty())
+            throw new ListaRobotsPorRecolherException("Não existem Paletes por recolher");
+
+        return l;
+    }
+
+    /**
+     * Lista dos Robots por Entregar
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorEntregar() throws ListaRobotsPorEntregarException {
+        List<String> l = robots.robotsPorEntregar();
+
+        if(l.isEmpty())
+            throw new ListaRobotsPorEntregarException("Não existem Paletes por entregar");
+
+        return l;
+    }
 }

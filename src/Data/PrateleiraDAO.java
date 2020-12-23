@@ -1,13 +1,9 @@
 package Data;
 
-import Business.Armazem.Palete;
 import Business.Armazem.Prateleira;
 import Business.Gestor.Gestor;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Classe que representa o acesso aos dados da Prateleira
@@ -71,7 +67,7 @@ public class PrateleiraDAO {
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
 
-            ResultSet rs = stm.executeQuery("SELECT MIN(Ocupacao) FROM Prateleira WHERE Ocupacao < 5");
+            ResultSet rs = stm.executeQuery("select min(ocupacao), prateleiraID from prateleira where ocupacao < capacidade group by prateleiraID;");
 
             if(rs.next())
                 p = rs.getInt("prateleiraID");

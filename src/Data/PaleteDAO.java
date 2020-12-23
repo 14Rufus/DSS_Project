@@ -119,7 +119,7 @@ public class PaleteDAO{
      */
     public List<String> listLocalizacoes(){
         List<String> l = new ArrayList<>();
-        String line,qr;
+        String line;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
@@ -135,6 +135,29 @@ public class PaleteDAO{
                     line += "Armazém, Prateleira: " + rs.getInt("Prateleira_prateleiraID");
 
                 l.add(line);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return l;
+    }
+
+    /**
+     * Lista das Paletes por Notificar
+     *
+     * @return Lista das Paletes por Notifcar
+     */
+    public List<String> paletesPorNotificar() {
+        List<String> l = new ArrayList<>();
+
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("select p.qrCode from Palete p, Localizacao l where p.Localizacao_idLocalizacao = l.idLocalizacao and l.zonaID = '"+ "Rececao" +"' ;")) {
+            while (rs.next()) {
+                l.add(rs.getString("qrCode"));
             }
         }
         catch (Exception e) {

@@ -1,7 +1,5 @@
 import Presentation.TextUI;
 
-import java.util.Scanner;
-
 public class SGSapp {
     /**
      * O método main cria a aplicação e invoca o método run()

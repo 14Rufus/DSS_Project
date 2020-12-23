@@ -35,7 +35,7 @@ public class SGS implements ISGS {
      * @param qrCode Código QR da Palete que será transportada
      * @return ID do Robot que recebeu a informação
      */
-    public String notificarRobot(String qrCode) throws RobotNaoDisponivelException, PaleteNaoExisteException {
+    public String notificarRobot(String qrCode) throws RobotNaoDisponivelException, PaleteNaoExisteException, ArmazemCheioException {
         String res = gestArmazem.notRobot(qrCode);
         return res;
     }
@@ -96,4 +96,31 @@ public class SGS implements ISGS {
      * @return Boolean que indica se o Login é válido
      */
     public boolean validaLoginGestor (String password) { return gestGestor.validaLoginGestor(password); }
+
+    /**
+     * Lista das Paletes por Notificar
+     *
+     * @return Lista das Paletes por Notifcar
+     */
+    public List<String> paletesPorNotificar() throws ListaPaletesPorNotificarException {
+        return gestArmazem.paletesPorNotificar();
+    }
+
+    /**
+     * Lista dos Robots por Recolher
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorRecolher() throws ListaRobotsPorRecolherException {
+        return gestArmazem.robotsPorRecolher();
+    }
+
+    /**
+     * Lista dos Robots por Entregar
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorEntregar() throws ListaRobotsPorEntregarException {
+        return gestArmazem.robotsPorEntregar();
+    }
 }
