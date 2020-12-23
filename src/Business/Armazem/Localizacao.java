@@ -5,7 +5,8 @@ public class Localizacao {
     private int prateleira;
     private String zonaID;
 
-    public Localizacao(int prateleira, String zonaID) {
+    public Localizacao(int id,int prateleira, String zonaID) {
+        idLocalizacao = id;
         this.prateleira = prateleira;
         this.zonaID = zonaID;
     }

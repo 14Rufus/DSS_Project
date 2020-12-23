@@ -5,12 +5,14 @@ public class Robot {
     private boolean disponivel;
     private boolean recolheu;
     private InfoTransporte infoTransporte;
+    private Localizacao localizacao;
 
-    public Robot(String id, boolean disp, boolean recolheu, InfoTransporte infoTransporte) {
+    public Robot(String id, boolean disp, boolean recolheu, InfoTransporte infoTransporte,Localizacao l) {
         robotID = id;
         disponivel = disp;
         this.recolheu = recolheu;
         this.infoTransporte = infoTransporte;
+        localizacao = l;
     }
 
     public Robot(String id) {
@@ -18,6 +20,18 @@ public class Robot {
         disponivel = false;
         this.recolheu = false;
         this.infoTransporte = null;
+    }
+
+    public Localizacao getLocalizacao() {
+        return localizacao;
+    }
+
+    public int getLocalizacaoID(){
+        return localizacao.getIdLocalizacao();
+    }
+
+    public void setLocalizacao(Localizacao localizacao) {
+        this.localizacao = localizacao;
     }
 
     public void setInfoTransporte(String qr, int prat, String zona) {

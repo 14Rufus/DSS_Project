@@ -1,5 +1,6 @@
 package Data;
 import Business.Armazem.InfoTransporte;
+import Business.Armazem.Localizacao;
 import Business.Armazem.Robot;
 import java.sql.*;
 import java.util.Collection;
@@ -8,37 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class RobotDAO implements Map<String, Robot> {
-    private static RobotDAO singleton = null;
-
-    private RobotDAO() {
-        try (Connection conn =
-                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
-             Statement stm = conn.createStatement()) {
-            String sql = "CREATE TABLE IF NOT EXISTS robots (" +
-                    "RobotId varchar(10) NOT NULL PRIMARY KEY," +
-                    "Disponivel int DEFAULT 0," +
-                    "QrCode varchar(10) DEFAULT NULL," +
-                    "Prateleira int DEFAULT 0," +
-                    "ZonaID varchar(10) DEFAULT NULL," +
-                    "Recolheu int DEFAULT 0)";
-            stm.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new NullPointerException(e.getMessage());
-        }
-    }
-
-    /**
-     * Implementação do padrão Singleton
-     *
-     * @return devolve a instância única desta classe
-     */
-    public static RobotDAO getInstance() {
-        if (RobotDAO.singleton == null) {
-            RobotDAO.singleton = new RobotDAO();
-        }
-        return RobotDAO.singleton;
-    }
 
     @Override
     public int size() {
@@ -57,7 +27,7 @@ public class RobotDAO implements Map<String, Robot> {
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
              ResultSet rs =
-                     stm.executeQuery("SELECT robotId FROM robots WHERE robotId='"+key.toString()+"'")) {
+                     stm.executeQuery("SELECT RobotID FROM Robot WHERE robotID='"+key.toString()+"'")) {
             r = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,7 +47,7 @@ public class RobotDAO implements Map<String, Robot> {
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM robots WHERE RobotId='"+key+"'")) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM Robot WHERE RobotID='"+key+"'")) {
             if (rs.next()) {
                 boolean disp = false, rec = false;
                 if(rs.getInt("Disponivel") == 1)
@@ -85,18 +55,23 @@ public class RobotDAO implements Map<String, Robot> {
                 if(rs.getInt("Recolheu") == 1)
                     rec = true;
 
-                if(rs.getString("QrCode") != "") {
-                    InfoTransporte i = new InfoTransporte(rs.getString("QrCode"),
-                            rs.getInt("Prateleira"),
-                            rs.getString("ZonaID"));
-                    p = new Robot(rs.getString("RobotId"),
-                            disp,rec, i);
-                }
-                else
-                    p = new Robot(rs.getString("RobotId"),
-                        disp,rec,null);
-            } else {
-                p = null;
+                Localizacao l;
+                ResultSet rsL = stm.executeQuery(
+                        "SELECT * FROM Localizacao WHERE idLocalizacao='"+rs.getInt("Localizacao_idLocalizacao")+"'");
+                l = new Localizacao
+                        (rsL.getInt("idLocalizacao"),rsL.getInt("Prateleira_prateleiraID"),rsL.getString("zonaID"));
+
+                ResultSet rsI = stm.executeQuery(
+                        "SELECT * FROM InfoTransporte WHERE idInfoTransporte='"+rs.getInt("InfoTransporte_idInfoTransporte")+"'");
+                InfoTransporte i = null;
+
+                if(rs.getInt("InfoTransporte_idInfoTransporte") != 0)
+                    i = new InfoTransporte(rsI.getInt("idInfoTransporte"),
+                            rsI.getString("Palete_qrCode"),
+                            rsI.getInt("Prateleira_prateleiraID"));
+
+                p = new Robot(rs.getString("RobotId"),disp,rec,i,l);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,25 +84,27 @@ public class RobotDAO implements Map<String, Robot> {
     public Robot put(String key, Robot r) {
         Robot res = null;
         InfoTransporte i = r.getInfoTransporte();
+        Localizacao l = r.getLocalizacao();
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
-            if(i != null) {
-                int disp = 0, rec = 0;
-                if(r.isDisponivel() == true)
-                    disp = 1;
-                if(r.isPaleteRecolhida() == true)
-                    rec = 1;
 
-                stm.executeUpdate("INSERT INTO robots VALUES ('" + r.getRobotID() + "'," + disp + ", '" +i.getQrCode() + "', " +
-                        i.getPrateleira() + ", '" +i.getZonaID() + "', " + rec + ") " +
-                        "ON DUPLICATE KEY UPDATE Disponivel=Values(Disponivel), QrCode=Values(QrCode)," +
-                        "Prateleira=Values(Prateleira) ,ZonaID=Values(ZonaID) , Recolheu=Values(Recolheu)");
-            }
-            else
-                stm.executeUpdate("INSERT INTO robots VALUES ('" + r.getRobotID()+ "',1, '"+""+"' ,0, '"+""+"' , 0) " +
-                        "ON DUPLICATE KEY UPDATE Disponivel=Values(Disponivel), QrCode=Values(QrCode)," +
-                        "Prateleira=Values(Prateleira) ,ZonaID=Values(ZonaID) , Recolheu=Values(Recolheu)");
+            int disp = 0, rec = 0;
+            if(r.isDisponivel() == true)
+                disp = 1;
+            if(r.isPaleteRecolhida() == true)
+                rec = 1;
+            stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
+                    "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
+
+            stm.executeUpdate("INSERT INTO Robot VALUES ('" + r.getRobotID() + "'," + disp + "," + rec + ", " +
+                    i.getIdinfoTransporte() + ", " +l.getIdLocalizacao() + ") " +
+                    "ON DUPLICATE KEY UPDATE Disponivel=Values(Disponivel), InfoTransporte_idInfoTransporte=Values(InfoTransporte_idInfoTransporte)," +
+                    "Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao), Recolheu=Values(Recolheu)");
+
+            if(i != null)
+                stm.executeUpdate("INSERT INTO InfoTransporte VALUES ("+i.getIdinfoTransporte()+",'"+i.getQrCode()+"', "+i.getPrateleira()+")" +
+                        "ON DUPLICATE KEY UPDATE Palete_qrCode=Values(Palete_qrCode), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
         } catch (SQLException e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
@@ -141,7 +118,7 @@ public class RobotDAO implements Map<String, Robot> {
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
-            stm.executeUpdate("DELETE FROM robots WHERE RobotId='"+key+"'");
+            stm.executeUpdate("DELETE FROM Robot WHERE RobotID='"+key+"'");
         } catch (Exception e) {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());

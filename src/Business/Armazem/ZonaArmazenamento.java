@@ -12,7 +12,7 @@ public class ZonaArmazenamento extends Zona {
         tipoZona = tipo;
         prateleiras = new HashMap<>();
         for(int i = 1;i<=5;i++)
-            prateleiras.put(i,new Prateleira(i));
+            prateleiras.put(i,new Prateleira(i,5,0));
     }
 
     public boolean isPaleteValida (String qrCode) {
@@ -35,8 +35,6 @@ public class ZonaArmazenamento extends Zona {
         return prateleira.getPrateleiraID();
     }
 
-//    -------------------------
-//    falta definir em qual prateleira colocar
     public void arrumaPalete (String zonaID,int prateleira,String qrCode, String tipoMaterial) {
         prateleiras.get(prateleira).addPalete(qrCode,tipoMaterial,zonaID);
     }

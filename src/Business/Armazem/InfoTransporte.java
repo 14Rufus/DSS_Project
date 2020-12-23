@@ -1,14 +1,22 @@
 package Business.Armazem;
 
 public class InfoTransporte {
+    private int idinfoTransporte;
     private String qrCode;
     private int prateleira;
-    private String zonaID;
 
-    public InfoTransporte(String qr, int prat, String zona) {
+    public InfoTransporte(int id, String qr, int prat) {
+        idinfoTransporte = id;
         qrCode = qr;
         prateleira = prat;
-        zonaID = zona;
+    }
+
+    public int getIdinfoTransporte() {
+        return idinfoTransporte;
+    }
+
+    public void setIdinfoTransporte(int idinfoTransporte) {
+        this.idinfoTransporte = idinfoTransporte;
     }
 
     public String getQrCode() {
@@ -25,13 +33,5 @@ public class InfoTransporte {
 
     public void setPrateleira(int prateleira) {
         this.prateleira = prateleira;
-    }
-
-    public String getZonaID() {
-        return zonaID;
-    }
-
-    public void setZonaID(String zonaID) {
-        this.zonaID = zonaID;
     }
 }
