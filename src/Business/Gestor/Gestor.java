@@ -3,24 +3,24 @@ package Business.Gestor;
 import java.util.Objects;
 
 public class Gestor {
-    private int id;
+    private int idGestor;
     private String nome;
     private String password;
     private boolean online;
 
     public Gestor(int id, String nome, String password, boolean online) {
-        this.id = id;
+        this.idGestor = id;
         this.nome = nome;
         this.password = password;
         this.online = online;
     }
 
-    public int getId() {
-        return id;
+    public int getIdGestor() {
+        return idGestor;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdGestor(int idGestor) {
+        this.idGestor = idGestor;
     }
 
     public String getNome() {
@@ -57,6 +57,6 @@ public class Gestor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Gestor gestor = (Gestor) o;
-        return id == gestor.id && online == gestor.online && nome.equals(gestor.nome) && password.equals(gestor.password);
+        return online == gestor.online && nome.equals(gestor.nome) && password.equals(gestor.password);
     }
 }

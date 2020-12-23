@@ -1,14 +1,21 @@
-package Business.Gestor;
+package Business.Armazem;
 
 public class Localizacao {
+    private int idLocalizacao;
     private int prateleira;
     private String zonaID;
-    private String robotID;
 
     public Localizacao(int prateleira, String zonaID) {
         this.prateleira = prateleira;
         this.zonaID = zonaID;
-        robotID = "";
+    }
+
+    public int getIdLocalizacao() {
+        return idLocalizacao;
+    }
+
+    public void setIdLocalizacao(int idLocalizacao) {
+        this.idLocalizacao = idLocalizacao;
     }
 
     public int getPrateleira() {

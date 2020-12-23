@@ -9,13 +9,13 @@ public class Prateleira {
     private int prateleiraID;
     private int capacidade;
     private int ocupacao;
-    private Map<String, Palete> paletes;
+    private PaleteDAO paletes;
 
-    public Prateleira(int prateleiraID) {
+    public Prateleira(int prateleiraID,int capacidade,int ocupacao) {
         this.prateleiraID = prateleiraID;
-        this.capacidade = 5;
-        this.ocupacao = 0;
-        paletes = PaleteDAO.getInstance();
+        this.capacidade = capacidade;
+        this.ocupacao = ocupacao;
+        paletes = new PaleteDAO();
     }
 
     public int getPrateleiraID() {

@@ -1,6 +1,6 @@
 package Data;
 
-import Business.Armazem.Localizacao;
+import Business.Armazem.Palete;
 import Business.Armazem.Prateleira;
 import Business.Gestor.Gestor;
 
@@ -9,7 +9,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-public class LocalizacaoDAO {
+public class PrateleiraDAO {
+
     public Prateleira get(Object key) {
         Prateleira p = null;
         try (Connection conn =

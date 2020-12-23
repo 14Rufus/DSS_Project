@@ -1,5 +1,7 @@
 package Business.Gestor;
 
+import Business.Armazem.Localizacao;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.Map;
 
 public class GestGestor implements IGestGestor {
     public Gestor gestor;
-    public Map<String,Localizacao> listagem;
+    public Map<String, Localizacao> listagem;
 
     public GestGestor() {
         listagem = new HashMap<>();
