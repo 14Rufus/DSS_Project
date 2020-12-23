@@ -57,6 +57,12 @@ public class GestArmazem implements IGestArmazem {
     }
     // ----------------------------
 
+    /**
+     * Devolve a distância a que um Robot se encontra da Zona de Receção
+     *
+     * @param r Robot
+     * @return  Distância a que o Robot se encontra
+     */
     public int distancia(Robot r) {
         String zona = r.getLocZona();
         int prat = r.getLocPrat();
@@ -156,6 +162,11 @@ public class GestArmazem implements IGestArmazem {
         return qrCode;
     }
 
+    /**
+     * Listagem das Localizações das Paletes
+     *
+     * @return Listagem das Localizações
+     */
     public List<String> getListagem(){
         return zonaRececao.getListagem();
     }

@@ -59,6 +59,10 @@ public class ZonaRececao extends Zona {
         paletes.put(p);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getListagem(){
         return paletes.listLocalizacoes();
     }

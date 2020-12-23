@@ -1,3 +1,6 @@
+/**
+ * Classe que representa o acesso aos dados de uma Palete
+ */
 package Data;
 
 import Business.Armazem.Localizacao;
@@ -8,6 +11,12 @@ import java.util.*;
 
 public class PaleteDAO{
 
+    /**
+     * Verifiaca se uma determinada Palete existe
+     *
+     * @param key Chave da Palete a ser verificada
+     * @return Boolean que representa a existência da Palete
+     */
     public boolean containsKey(Object key) {
         boolean r;
         try (Connection conn =
@@ -23,6 +32,12 @@ public class PaleteDAO{
         return r;
     }
 
+    /**
+     * Devolve uma Palete
+     *
+     * @param key Chave identificadora da Palete pretendida
+     * @return Palete pretendida
+     */
     public Palete get(String key) {
         Palete p = null;
         Localizacao l = null;
@@ -47,6 +62,12 @@ public class PaleteDAO{
         return p;
     }
 
+    /**
+     * Adiciona uma Palete à base de dados
+     *
+     * @param p Palete a ser adicionada
+     * @return Palete adicionada
+     */
     public Palete put(Palete p) {
         Palete res = null;
         Localizacao l = p.getLocalizacao();
@@ -70,6 +91,11 @@ public class PaleteDAO{
         return res;
     }
 
+    /**
+     * calcula o número de Localizações
+     *
+     * @return Número de Localizações
+     */
     public int sizeLocalizacao() {
         int i = 0;
         try (Connection conn =
@@ -87,6 +113,11 @@ public class PaleteDAO{
         return i;
     }
 
+    /**
+     * Lista as Localizações das Paletes
+     *
+     * @return Lista de Localizações
+     */
     public List<String> listLocalizacoes(){
         List<String> l = new ArrayList<>();
         String line,qr;

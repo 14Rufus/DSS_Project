@@ -50,18 +50,38 @@ public class Prateleira {
         return !paletes.containsKey(qrCode);
     }
 
+    /**
+     * Altera ID da Prateleira
+     *
+     * @param prateleiraID novo ID da Prateleria
+     */
     public void setPrateleiraID(int prateleiraID) {
         this.prateleiraID = prateleiraID;
     }
 
+    /**
+     * Devovle a capacidade da Prateleira
+     *
+     * @return Capacidade da Prateleira
+     */
     public int getCapacidade() {
         return capacidade;
     }
 
+    /**
+     * Altera a capacidade da Prateleira
+     *
+     * @param capacidade nova capacidade da Prateleira
+     */
     public void setCapacidade(int capacidade) {
         this.capacidade = capacidade;
     }
 
+    /**
+     * Devolve a ocupação da Prateleira
+     *
+     * @return Ocupação da Prateleira
+     */
     public int getOcupacao() {
         return ocupacao;
     }
