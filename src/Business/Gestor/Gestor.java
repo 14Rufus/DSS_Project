@@ -69,7 +69,6 @@ public class Gestor {
      * @return validação das credenciais através d e um boolean
      */
     public boolean validaCredenciaisGestor(String password) {
-        System.out.println(this.password);
         return (this.password.equals(password));
     }
 
