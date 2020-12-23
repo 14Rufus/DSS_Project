@@ -51,11 +51,12 @@ public class Menu {
      */
     public String lerString(String message) {
         String line;
+        line = is.nextLine();
 
         do{
             System.out.println(message);
             line = is.nextLine();
-        } while (line.isEmpty());
+        } while (line.isBlank());
 
         return line;
     }
@@ -96,16 +97,9 @@ public class Menu {
      * notificação do registo de uma Palete
      *
      * @param qrCode Código QR da Palete registada
-     * @param b      Boolean que indica se a Palete foi registada com sucesso
      */
-    public void notRegistaPalete(String qrCode,boolean b) {
-        String msg;
-        if(b)
-            msg = "A palete com o Qr-Code: " + qrCode + ", foi registada com sucesso.";
-        else
-            msg = "A palete com o Qr-Code: " + qrCode + ", não foi registada com sucesso.";
-
-        System.out.println(msg);
+    public void notRegistaPalete(String qrCode) {
+        System.out.println("A palete com o Qr-Code: " + qrCode + ", foi registada com sucesso.");
     }
 
     /**
@@ -115,13 +109,7 @@ public class Menu {
      * @param robot  Robot que recolherá a Palete
      */
     public void notRobot(String qrCode,String robot) {
-        String msg;
-        if(robot == null)
-            msg = "O robot com o robotID: " + robot + ", não foi notificado com sucesso.";
-        else
-            msg = "O robot com o robotID: " + robot + ", foi notificado para recolher a palete: " + qrCode+ ".";
-
-        System.out.println(msg);
+        System.out.println("O robot com o robotID: " + robot + ", foi notificado para recolher a palete: " + qrCode+ ".");
     }
 
     /**
@@ -131,13 +119,7 @@ public class Menu {
      * @param robot  Robot que recolhe a Palete
      */
     public void notRecolherPalete(String qrCode,String robot) {
-        String msg;
-        if(robot == null)
-            msg = "O robot com o robotID: " + robot + ", não recolheu a palete com sucesso.";
-        else
-            msg = "O robot com o robotID: " + robot + ", recolheu a palete: " + qrCode+ " com sucesso.";
-
-        System.out.println(msg);
+        System.out.println("O robot com o robotID: " + robot + ", recolheu a palete: " + qrCode+ " com sucesso.");
     }
 
     /**
@@ -147,13 +129,7 @@ public class Menu {
      * @param robot  Robot que enterga a Palete
      */
     public void notEntregarPalete(String qrCode,String robot) {
-        String msg;
-        if(robot == null)
-            msg = "O robot com o robotID: " + robot + ", não entregou a palete com sucesso.";
-        else
-            msg = "O robot com o robotID: " + robot + ", entregou a palete: " + qrCode+ " com sucesso.";
-
-        System.out.println(msg);
+        System.out.println("O robot com o robotID: " + robot + ", entregou a palete: " + qrCode+ " com sucesso.");
     }
 
     /**
@@ -162,6 +138,7 @@ public class Menu {
      * @param l Lista de Localizações
      */
     public void imprimeListagem(List<String> l){
+        System.out.println("\nListagem das Paletes:");
         for(String s:l)
             System.out.println(s);
     }

@@ -10,12 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ZonaArmazenamento extends Zona {
-    private String tipoZona;
     private PrateleiraDAO prateleiras;
 
-    public ZonaArmazenamento(String zonaID,String tipo) {
+    public ZonaArmazenamento(String zonaID) {
         super(zonaID);
-        tipoZona = tipo;
         prateleiras = new PrateleiraDAO();
     }
 

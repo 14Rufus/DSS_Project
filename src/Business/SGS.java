@@ -6,6 +6,7 @@ import Business.Armazem.GestArmazem;
 import Business.Armazem.IGestArmazem;
 import Business.Gestor.GestGestor;
 import Business.Gestor.IGestGestor;
+import Exceptions.*;
 
 import java.util.List;
 
@@ -22,12 +23,10 @@ public class SGS implements ISGS {
      * Regista uma Palete
      *
      * @param qrCode        Código QR da Palete
-     * @param tipoMaterial  Tipo de Material da Palete
      * @return Boolean que indica se a Palete foi registada ou não
      */
-    public boolean registarPalete(String qrCode){
-        boolean res = gestArmazem.registaPalete(qrCode);
-        return res;
+    public void registarPalete(String qrCode) throws PaleteInvalidaException {
+        gestArmazem.registaPalete(qrCode);
     }
 
     /**
@@ -36,7 +35,7 @@ public class SGS implements ISGS {
      * @param qrCode Código QR da Palete que será transportada
      * @return ID do Robot que recebeu a informação
      */
-    public String notificarRobot(String qrCode) {
+    public String notificarRobot(String qrCode) throws RobotNaoDisponivelException, PaleteNaoExisteException {
         String res = gestArmazem.notRobot(qrCode);
         return res;
     }
@@ -47,7 +46,7 @@ public class SGS implements ISGS {
      * @param robotID ID do Robot que recolhe a Palete
      * @return Código QR da Palete recolhida
      */
-    public String recolherPalete(String robotID){
+    public String recolherPalete(String robotID) throws RobotNaoDisponivelException {
         String res = gestArmazem.recolheP(robotID);
         return res;
     }
@@ -58,7 +57,7 @@ public class SGS implements ISGS {
      * @param robotID ID do Robot que entrega a Palete
      * @return Código QR da Palete entregue
      */
-    public String entregarPalete(String robotID){
+    public String entregarPalete(String robotID) throws RobotNaoDisponivelException, PaleteNaoRecolhidaException {
         String res = gestArmazem.entregaP(robotID);
         return res;
     }
@@ -68,7 +67,7 @@ public class SGS implements ISGS {
      *
      * @return Lista com as Localizações das Paletes
      */
-    public List<String> consultarListagem() {
+    public List<String> consultarListagem() throws ListagemVaziaException {
         return gestArmazem.getListagem();
     }
 

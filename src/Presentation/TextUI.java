@@ -4,6 +4,7 @@
 package Presentation;
 import Business.ISGS;
 import Business.SGS;
+import Exceptions.*;
 
 import java.util.Scanner;
 
@@ -86,9 +87,10 @@ public class TextUI {
     private void registaPalete() {
         try {
             String qrCode = menu.lerString("Qr-Code da palete: ");
-            menu.notRegistaPalete(qrCode,model.registarPalete(qrCode));
+            model.registarPalete(qrCode);
+            menu.notRegistaPalete(qrCode);
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | PaleteInvalidaException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -101,7 +103,7 @@ public class TextUI {
             String qrCode = menu.lerString("Insira um Qr-Code: ");
             menu.notRobot(qrCode,model.notificarRobot(qrCode));
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoExisteException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -114,7 +116,7 @@ public class TextUI {
             String robotid = menu.lerString("Insira um robotID: ");
             menu.notRecolherPalete(model.recolherPalete(robotid),robotid);
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | RobotNaoDisponivelException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -127,7 +129,7 @@ public class TextUI {
             String robotid = menu.lerString("Insira um robotID: ");
             menu.notEntregarPalete(model.entregarPalete(robotid),robotid);
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoRecolhidaException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -136,6 +138,10 @@ public class TextUI {
      * Consulta a Listagem das Localizações
      */
     private void consultarListagem(){
-        menu.imprimeListagem(model.consultarListagem());
+        try {
+            menu.imprimeListagem(model.consultarListagem());
+        } catch (ListagemVaziaException e) {
+            e.printStackTrace();
+        }
     }
 }

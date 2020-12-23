@@ -17,16 +17,6 @@ public class ZonaRececao extends Zona {
     }
 
     /**
-     * Verifica se a Palete é válida
-     *
-     * @param qrCode Código QR da Palete
-     * @return  Validade da Palete
-     */
-    public boolean isPaleteValida (String qrCode) {
-        return !paletes.containsKey(qrCode);
-    }
-
-    /**
      * Acrescenta uma Palete à Zona de Receção
      *
      * @param qrCode        Código QR da Palete
