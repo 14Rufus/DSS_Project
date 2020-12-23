@@ -3,7 +3,7 @@ package Business;
 import java.util.List;
 
 public interface ISGS {
-    boolean registarPalete(String qrCode,String tipoMaterial);
+    boolean registarPalete(String qrCode);
     String notificarRobot(String qrCode);
     String recolherPalete(String robotID);
     String entregarPalete(String robotID);

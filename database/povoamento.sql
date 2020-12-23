@@ -23,13 +23,13 @@ INSERT INTO Localizacao VALUES
     (8, "Armazenamento", 6);
 
 INSERT INTO Palete VALUES 
-	('a1', 'Parecivel', 1),
-    ('a2', 'Nao Parecivel', 2),
-    ('a3', 'Nao Parecivel', 3),
-    ('a4', 'Parecivel', 4),
-    ('a5', 'Nao Parecivel', 5),
-    ('a6', 'Parecivel', 6),
-    ('a7', 'Nao Parecivel', 7);
+	('a1', 1),
+    ('a2', 2),
+    ('a3', 3),
+    ('a4', 4),
+    ('a5', 5),
+    ('a6', 6),
+    ('a7', 7);
 
 INSERT INTO InfoTransporte VALUES (1, 'a6', 2);
 

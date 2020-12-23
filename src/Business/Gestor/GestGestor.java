@@ -14,26 +14,9 @@ import java.util.Map;
 
 public class GestGestor implements IGestGestor {
     public GestorDAO gestor;
-    public Map<String, Localizacao> listagem;
 
     public GestGestor() {
-        listagem = new HashMap<>();
         gestor = new GestorDAO();
-        //gestor = new Gestor(1,"luis","luis",false);
-    }
-
-    /**
-     * Devolve a listagem total de paletes do armazem
-     *
-     * @return listagem de paletes do armazem
-     */
-
-    public List<String> consultarL(){
-        List <String> list = new ArrayList<>();
-        for(String s: listagem.keySet()) {
-            list.add(s + ": " + listagem.get(s).toString());
-        }
-        return list;
     }
 
     /**
@@ -45,19 +28,6 @@ public class GestGestor implements IGestGestor {
     public boolean validaLoginGestor(String password) {
         Gestor g = gestor.get();
         return g.validaCredenciaisGestor(password);
-    }
-
-    /**
-     * Adiciona localizacao
-     *
-     * @param l localizacao a adicionar
-     */
-
-    public void addLocalizacao(String l) {
-        String [] list;
-        list = l.split(".",3);
-        System.out.println(list[0]);
-        //listagem.putIfAbsent(list[0],new Localizacao(0,list[2]));
     }
 
     /**

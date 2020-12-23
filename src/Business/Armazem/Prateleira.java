@@ -94,7 +94,7 @@ public class Prateleira {
      */
     public void addPalete (String qrCode, String zona) {
         int n = paletes.sizeLocalizacao();
-        paletes.put(new Palete(qrCode, "Parecivel", prateleiraID, zona,n+1));
+        paletes.put(new Palete(qrCode, prateleiraID, zona,n+1));
         ocupacao++;
     }
 

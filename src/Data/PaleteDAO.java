@@ -47,13 +47,12 @@ public class PaleteDAO{
              ResultSet rs = stm.executeQuery("SELECT * FROM Palete WHERE QrCode='"+key+"'")) {
             if (rs.next()) {
                 String qr = rs.getString("qrCode");
-                String tipo = rs.getString("tipoMaterial");
 
                 ResultSet rsL = stm.executeQuery("SELECT * FROM Localizacao WHERE idLocalizacao=" + rs.getInt("Localizacao_idLocalizacao") + "");
                 if (rsL.next()){
                     l = new Localizacao(rsL.getInt("idLocalizacao"), rsL.getInt("Prateleira_prateleiraID"), rsL.getString("zonaID"));
                 }
-                p = new Palete(qr, tipo, l);
+                p = new Palete(qr, l);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,8 +80,8 @@ public class PaleteDAO{
                 stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
                         "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
 
-            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"',"+l.getIdLocalizacao()+")" +
-                    "ON DUPLICATE KEY UPDATE TipoMaterial=Values(TipoMaterial), Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao)");
+            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"',"+l.getIdLocalizacao()+")" +
+                    "ON DUPLICATE KEY UPDATE Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao)");
 
         } catch (SQLException e) {
             e.printStackTrace();

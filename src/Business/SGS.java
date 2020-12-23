@@ -25,9 +25,8 @@ public class SGS implements ISGS {
      * @param tipoMaterial  Tipo de Material da Palete
      * @return Boolean que indica se a Palete foi registada ou não
      */
-    public boolean registarPalete(String qrCode,String tipoMaterial){
-        boolean res = gestArmazem.registaPalete(qrCode,tipoMaterial);
-        //gestGestor.addNotRegisto();
+    public boolean registarPalete(String qrCode){
+        boolean res = gestArmazem.registaPalete(qrCode);
         return res;
     }
 
@@ -50,8 +49,6 @@ public class SGS implements ISGS {
      */
     public String recolherPalete(String robotID){
         String res = gestArmazem.recolheP(robotID);
-        //if(l != null)
-            //gestGestor.addLocalizacao(l);
         return res;
     }
 
@@ -63,8 +60,6 @@ public class SGS implements ISGS {
      */
     public String entregarPalete(String robotID){
         String res = gestArmazem.entregaP(robotID);
-        //if(l != null)
-            //gestGestor.addLocalizacao(l);
         return res;
     }
 

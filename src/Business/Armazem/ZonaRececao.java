@@ -30,11 +30,10 @@ public class ZonaRececao extends Zona {
      * Acrescenta uma Palete à Zona de Receção
      *
      * @param qrCode        Código QR da Palete
-     * @param tipoMaterial  Tipo de Material da Palete
      */
-    public void acrescentaPalete (String qrCode, String tipoMaterial) {
+    public void acrescentaPalete (String qrCode) {
         int n = paletes.sizeLocalizacao();
-        Palete palete = new Palete(qrCode, tipoMaterial, 0, super.getZonaID(),n + 1);
+        Palete palete = new Palete(qrCode, 0, super.getZonaID(),n + 1);
         paletes.put(palete);
     }
 

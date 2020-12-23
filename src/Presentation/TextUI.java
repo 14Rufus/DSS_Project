@@ -86,8 +86,7 @@ public class TextUI {
     private void registaPalete() {
         try {
             String qrCode = menu.lerString("Qr-Code da palete: ");
-            String materia = menu.lerString("Insira o tipo de material (Perecivél/Não Perecivel): ");
-            menu.notRegistaPalete(qrCode,model.registarPalete(qrCode,materia));
+            menu.notRegistaPalete(qrCode,model.registarPalete(qrCode));
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());

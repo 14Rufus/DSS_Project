@@ -45,11 +45,10 @@ public class GestArmazem implements IGestArmazem {
      * Regista uma Palete
      *
      * @param qrCode       Código QR da Palete
-     * @param tipoMaterial Tipo de Material da Palete
      */
-    public boolean registaPalete (String qrCode, String tipoMaterial) {
+    public boolean registaPalete (String qrCode) {
         if (validaPalete(qrCode)) {
-            zonaRececao.acrescentaPalete(qrCode, tipoMaterial);
+            zonaRececao.acrescentaPalete(qrCode);
             return true;
         }
 

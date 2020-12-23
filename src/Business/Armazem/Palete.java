@@ -5,18 +5,15 @@ package Business.Armazem;
 
 public class Palete {
     private String qrCode;
-    private String tipoMaterial;
     private Localizacao localizacao;
 
-    public Palete(String qrCode, String tipoMaterial,Localizacao l) {
+    public Palete(String qrCode, Localizacao l) {
         this.qrCode = qrCode;
-        this.tipoMaterial = tipoMaterial;
         localizacao = l;
     }
 
-    public Palete(String qrCode, String tipoMaterial,int prat,String zona,int id) {
+    public Palete(String qrCode,int prat,String zona,int id) {
         this.qrCode = qrCode;
-        this.tipoMaterial = tipoMaterial;
         localizacao = new Localizacao(id,prat,zona);
     }
 
@@ -27,15 +24,6 @@ public class Palete {
      */
     public String getQrCode() {
         return qrCode;
-    }
-
-    /**
-     * Devolve o Tipo de Material da Palete
-     *
-     * @return Tipo de Material da Palete
-     */
-    public String getTipoMaterial() {
-        return tipoMaterial;
     }
 
     /**
