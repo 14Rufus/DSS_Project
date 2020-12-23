@@ -1,3 +1,7 @@
+/**
+ *  Classe que representa uma Zona
+ */
+
 package Business.Armazem;
 
 public class Zona {
@@ -7,6 +11,11 @@ public class Zona {
         this.zonaID = zonaID;
     }
 
+    /**
+     * Devovle ID da Zona
+     *
+     * @return ID da Zona
+     */
     public String getZonaID() {
         return zonaID;
     }
