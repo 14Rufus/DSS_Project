@@ -9,6 +9,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Classe que representa o acesso aos dados da Prateleira
+ */
+
 public class PrateleiraDAO {
 
     public Prateleira get(Object key) {
@@ -31,6 +35,13 @@ public class PrateleiraDAO {
         return p;
     }
 
+    /**
+     * Atualiza o estado de uma prateleira fornecida
+     *
+     * @param p prateleira a ser atualizada
+     */
+
+
     public void updatePrateleira(Prateleira p) {
         Gestor res = null;
         try (Connection conn =
@@ -46,6 +57,13 @@ public class PrateleiraDAO {
             throw new NullPointerException(e.getMessage());
         }
     }
+
+    /**
+     * Escolhe uma prateleira onde vai ser colocada uma palete consoante a ocupacao da mesma
+     *
+     * return número identificador da prateleira escolhida
+     */
+
 
     public int escolhePrateleira() {
         int p = 0;

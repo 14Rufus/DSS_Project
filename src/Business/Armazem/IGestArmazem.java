@@ -1,11 +1,13 @@
 package Business.Armazem;
 
+import Exceptions.*;
+
 import java.util.List;
 
 public interface IGestArmazem {
-    boolean registaPalete (String qrCode, String tipoMaterial);
-    String notRobot(String qrCode);
-    String recolheP(String robotID);
-    String entregaP(String robotID);
-    List<String> getListagem();
+    void registaPalete (String qrCode) throws PaleteInvalidaException;
+    String notRobot(String qrCode) throws RobotNaoDisponivelException, PaleteNaoExisteException;
+    String recolheP(String robotID) throws RobotNaoDisponivelException;
+    String entregaP(String robotID) throws RobotNaoDisponivelException, PaleteNaoRecolhidaException;
+    List<String> getListagem() throws ListagemVaziaException;
 }

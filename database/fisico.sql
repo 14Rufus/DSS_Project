@@ -11,7 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema DSS_Project
 -- -----------------------------------------------------
-DROP SCHEMA `DSS_Project`;
+DROP SCHEMA `DSS_Project` ;
 CREATE SCHEMA IF NOT EXISTS `DSS_Project` DEFAULT CHARACTER SET utf8 ;
 USE `DSS_Project` ;
 
@@ -48,7 +48,6 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Palete` (
   `qrCode` VARCHAR(10) NOT NULL,
-  `tipoMaterial` VARCHAR(30) NULL,
   `Localizacao_idLocalizacao` INT NOT NULL,
   PRIMARY KEY (`qrCode`),
   INDEX `fk_Palete_Localizacao1_idx` (`Localizacao_idLocalizacao` ASC) VISIBLE,
@@ -87,7 +86,7 @@ ENGINE = InnoDB;
 -- Table `DSS_Project`.`Robot`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Robot` (
-  `RobotID` VARCHAR(10) NOT NULL,
+  `RobotID` INT NOT NULL,
   `Disponivel` INT NULL,
   `Recolheu` INT NULL,
   `InfoTransporte_idInfoTransporte` INT NULL,

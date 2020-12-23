@@ -4,6 +4,7 @@
 package Business.Armazem;
 
 import Data.RobotDAO;
+import Exceptions.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,8 +16,8 @@ public class GestArmazem implements IGestArmazem {
 
     public GestArmazem() {
         this.robots = new RobotDAO();
-        zonaRececao = new ZonaRececao("Receção");
-        zonaArmazenamento = new ZonaArmazenamento("z1","a");
+        zonaRececao = new ZonaRececao("Rececao");
+        zonaArmazenamento = new ZonaArmazenamento("Armazenamento");
     }
 
     /**
@@ -29,34 +30,24 @@ public class GestArmazem implements IGestArmazem {
         return zonaRececao.existePalete(qrCode);
     }
 
-    // USE CASE REGISTAR PALETE
-
-    /**
-     * Valida uma determinada Palete
-     *
-     * @param qrCode Código QR da Palete
-     * @return Validade da Palete
-     */
-    private boolean validaPalete (String qrCode) {
-        return zonaRececao.isPaleteValida(qrCode);
-    }
-
     /**
      * Regista uma Palete
      *
      * @param qrCode       Código QR da Palete
-     * @param tipoMaterial Tipo de Material da Palete
      */
-    public boolean registaPalete (String qrCode, String tipoMaterial) {
-        if (validaPalete(qrCode)) {
-            zonaRececao.acrescentaPalete(qrCode, tipoMaterial);
-            return true;
-        }
+    public void registaPalete (String qrCode) throws PaleteInvalidaException {
+        if (existePaleteRececao(qrCode))
+            throw new PaleteInvalidaException("A Palete já está registada no sistema");
 
-        return false;
+        zonaRececao.acrescentaPalete(qrCode);
     }
-    // ----------------------------
 
+    /**
+     * Devolve a distância a que um Robot se encontra da Zona de Receção
+     *
+     * @param r Robot
+     * @return  Distância a que o Robot se encontra
+     */
     public int distancia(Robot r) {
         String zona = r.getLocZona();
         int prat = r.getLocPrat();
@@ -97,18 +88,19 @@ public class GestArmazem implements IGestArmazem {
      *
      * @param qrCode Código QR da Palete a ser transportada
      */
-    public String notRobot(String qrCode){
+    public String notRobot(String qrCode) throws PaleteNaoExisteException, RobotNaoDisponivelException {
         Robot r = getRobotDisponivel();
-        if (!existePaleteRececao(qrCode) || r == null){
-            //System.out.println("robot/palete não disponivel");
-            return null;
-        } else {
-            int n = robots.sizeInfo();
-            r.setInfoTransporte(n + 1,qrCode, zonaArmazenamento.escolhePrateleira()); //ver quando n tem espaço
-            r.setDisponivel(false);
-            robots.put(r);
-            return r.getRobotID();
-        }
+        if (!existePaleteRececao(qrCode))
+            throw new PaleteNaoExisteException("A Palete não existe na zona de receção");
+
+        if (r == null)
+            throw new RobotNaoDisponivelException("Não existem robots disponivel");
+
+        int n = robots.sizeInfo();
+        r.setInfoTransporte(n + 1,qrCode, zonaArmazenamento.escolhePrateleira()); //ver quando n tem espaço
+        r.setDisponivel(false);
+        robots.put(r);
+        return r.getRobotID();
     }
 
     //  ---------------------------------------------------------
@@ -119,10 +111,11 @@ public class GestArmazem implements IGestArmazem {
      * @param robotID ID do Robot que recolherá a Palete
      * @return
      */
-    public String recolheP(String robotID){
+    public String recolheP(String robotID) throws RobotNaoDisponivelException {
         Robot r = robots.get(robotID);
+
         if(r == null || r.isDisponivel())
-            return null;
+            throw new RobotNaoDisponivelException("O Robot não está disponível para recolher esta palete");
 
         String qrCode = r.getQrCode();
         zonaRececao.recolhePalete(qrCode);
@@ -138,10 +131,14 @@ public class GestArmazem implements IGestArmazem {
      * @param robotID ID do Robot que entegará a Palete
      * @return
      */
-    public String entregaP(String robotID) {
+    public String entregaP(String robotID) throws RobotNaoDisponivelException, PaleteNaoRecolhidaException {
         Robot r = robots.get(robotID);
-        if(r == null || r.isDisponivel() || !r.isPaleteRecolhida())
-            return null;
+
+        if(r == null || r.isDisponivel())
+            throw new RobotNaoDisponivelException("O Robot não está disponível para entregar esta palete");
+
+        if(!r.isPaleteRecolhida())
+            throw new PaleteNaoRecolhidaException("A Palete não foi recolhida");
 
         String qrCode = r.getQrCode();
         int prateleira = r.getPrateleira();
@@ -156,8 +153,18 @@ public class GestArmazem implements IGestArmazem {
         return qrCode;
     }
 
-    public List<String> getListagem(){
-        return zonaRececao.getListagem();
+    /**
+     * Listagem das Localizações das Paletes
+     *
+     * @return Listagem das Localizações
+     */
+    public List<String> getListagem() throws ListagemVaziaException {
+        List<String> l = zonaRececao.getListagem();
+
+        if(l.isEmpty())
+            throw new ListagemVaziaException("Não existem Paletes a Listar");
+
+        return l;
     }
 
 }

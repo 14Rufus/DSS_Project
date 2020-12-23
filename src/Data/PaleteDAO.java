@@ -1,3 +1,6 @@
+/**
+ * Classe que representa o acesso aos dados de uma Palete
+ */
 package Data;
 
 import Business.Armazem.Localizacao;
@@ -8,6 +11,12 @@ import java.util.*;
 
 public class PaleteDAO{
 
+    /**
+     * Verifiaca se uma determinada Palete existe
+     *
+     * @param key Chave da Palete a ser verificada
+     * @return Boolean que representa a existência da Palete
+     */
     public boolean containsKey(Object key) {
         boolean r;
         try (Connection conn =
@@ -23,6 +32,12 @@ public class PaleteDAO{
         return r;
     }
 
+    /**
+     * Devolve uma Palete
+     *
+     * @param key Chave identificadora da Palete pretendida
+     * @return Palete pretendida
+     */
     public Palete get(String key) {
         Palete p = null;
         Localizacao l = null;
@@ -32,13 +47,12 @@ public class PaleteDAO{
              ResultSet rs = stm.executeQuery("SELECT * FROM Palete WHERE QrCode='"+key+"'")) {
             if (rs.next()) {
                 String qr = rs.getString("qrCode");
-                String tipo = rs.getString("tipoMaterial");
 
                 ResultSet rsL = stm.executeQuery("SELECT * FROM Localizacao WHERE idLocalizacao=" + rs.getInt("Localizacao_idLocalizacao") + "");
                 if (rsL.next()){
                     l = new Localizacao(rsL.getInt("idLocalizacao"), rsL.getInt("Prateleira_prateleiraID"), rsL.getString("zonaID"));
                 }
-                p = new Palete(qr, tipo, l);
+                p = new Palete(qr, l);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,6 +61,12 @@ public class PaleteDAO{
         return p;
     }
 
+    /**
+     * Adiciona uma Palete à base de dados
+     *
+     * @param p Palete a ser adicionada
+     * @return Palete adicionada
+     */
     public Palete put(Palete p) {
         Palete res = null;
         Localizacao l = p.getLocalizacao();
@@ -60,8 +80,8 @@ public class PaleteDAO{
                 stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
                         "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
 
-            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"',"+l.getIdLocalizacao()+")" +
-                    "ON DUPLICATE KEY UPDATE TipoMaterial=Values(TipoMaterial), Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao)");
+            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"',"+l.getIdLocalizacao()+")" +
+                    "ON DUPLICATE KEY UPDATE Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao)");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,6 +90,11 @@ public class PaleteDAO{
         return res;
     }
 
+    /**
+     * calcula o número de Localizações
+     *
+     * @return Número de Localizações
+     */
     public int sizeLocalizacao() {
         int i = 0;
         try (Connection conn =
@@ -87,6 +112,11 @@ public class PaleteDAO{
         return i;
     }
 
+    /**
+     * Lista as Localizações das Paletes
+     *
+     * @return Lista de Localizações
+     */
     public List<String> listLocalizacoes(){
         List<String> l = new ArrayList<>();
         String line,qr;

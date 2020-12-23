@@ -1,6 +1,10 @@
+/**
+ * Calsase que representa a interação enter sistema e utilizador
+ */
 package Presentation;
 import Business.ISGS;
 import Business.SGS;
+import Exceptions.*;
 
 import java.util.Scanner;
 
@@ -64,6 +68,9 @@ public class TextUI {
         model.setOnline(false);
     }
 
+    /**
+     * Lê a password introduzida e efetua o Login do Gestor
+     */
     private void introduzirPassword() {
         String pass;
         do {
@@ -74,48 +81,67 @@ public class TextUI {
         model.setOnline(true);
     }
 
+    /**
+     * Regista uma Palete
+     */
     private void registaPalete() {
         try {
             String qrCode = menu.lerString("Qr-Code da palete: ");
-            String materia = menu.lerString("Insira o tipo de material (Perecivél/Não Perecivel): ");
-            menu.notRegistaPalete(qrCode,model.registarPalete(qrCode,materia));
+            model.registarPalete(qrCode);
+            menu.notRegistaPalete(qrCode);
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | PaleteInvalidaException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Notifica o Robot
+     */
     private void notificarRobot() {
         try {
             String qrCode = menu.lerString("Insira um Qr-Code: ");
             menu.notRobot(qrCode,model.notificarRobot(qrCode));
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoExisteException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Recolhe uma Palete
+     */
     private void recolherPalete(){
         try {
             String robotid = menu.lerString("Insira um robotID: ");
             menu.notRecolherPalete(model.recolherPalete(robotid),robotid);
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | RobotNaoDisponivelException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * entrega uma Palete
+     */
     private void entregarPalete(){
         try {
             String robotid = menu.lerString("Insira um robotID: ");
             menu.notEntregarPalete(model.entregarPalete(robotid),robotid);
         }
-        catch (NullPointerException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoRecolhidaException e) {
             System.out.println(e.getMessage());
         }
     }
 
+    /**
+     * Consulta a Listagem das Localizações
+     */
     private void consultarListagem(){
-        menu.imprimeListagem(model.consultarListagem());
+        try {
+            menu.imprimeListagem(model.consultarListagem());
+        } catch (ListagemVaziaException e) {
+            e.printStackTrace();
+        }
     }
 }

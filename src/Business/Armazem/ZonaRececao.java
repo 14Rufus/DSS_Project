@@ -17,24 +17,13 @@ public class ZonaRececao extends Zona {
     }
 
     /**
-     * Verifica se a Palete é válida
-     *
-     * @param qrCode Código QR da Palete
-     * @return  Validade da Palete
-     */
-    public boolean isPaleteValida (String qrCode) {
-        return !paletes.containsKey(qrCode);
-    }
-
-    /**
      * Acrescenta uma Palete à Zona de Receção
      *
      * @param qrCode        Código QR da Palete
-     * @param tipoMaterial  Tipo de Material da Palete
      */
-    public void acrescentaPalete (String qrCode, String tipoMaterial) {
+    public void acrescentaPalete (String qrCode) {
         int n = paletes.sizeLocalizacao();
-        Palete palete = new Palete(qrCode, tipoMaterial, 0, super.getZonaID(),n + 1);
+        Palete palete = new Palete(qrCode, 0, super.getZonaID(),n + 1);
         paletes.put(palete);
     }
 
@@ -59,6 +48,10 @@ public class ZonaRececao extends Zona {
         paletes.put(p);
     }
 
+    /**
+     *
+     * @return
+     */
     public List<String> getListagem(){
         return paletes.listLocalizacoes();
     }
