@@ -30,8 +30,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Localizacao` (
   `idLocalizacao` INT NOT NULL,
-  `zonaID` VARCHAR(10) NULL,
-  `Prateleira_prateleiraID` INT NOT NULL,
+  `zonaID` VARCHAR(20) NULL,
+  `Prateleira_prateleiraID` INT NULL,
   PRIMARY KEY (`idLocalizacao`),
   INDEX `fk_Localizacao_Prateleira1_idx` (`Prateleira_prateleiraID` ASC) VISIBLE,
   CONSTRAINT `fk_Localizacao_Prateleira1`
@@ -48,7 +48,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Palete` (
   `qrCode` VARCHAR(10) NOT NULL,
   `tipoMaterial` VARCHAR(30) NULL,
-  `zonaID` INT NULL,
+  `zonaID` VARCHAR(20) NULL,
   `Localizacao_idLocalizacao` INT NOT NULL,
   PRIMARY KEY (`qrCode`),
   INDEX `fk_Palete_Localizacao1_idx` (`Localizacao_idLocalizacao` ASC) VISIBLE,
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `DSS_Project`.`InfoTransporte` (
   `idInfoTransporte` INT NOT NULL,
   `Palete_qrCode` VARCHAR(10) NOT NULL,
   `Prateleira_prateleiraID` INT NOT NULL,
-  `zonaID` VARCHAR(10) NULL,
+  `zonaID` VARCHAR(20) NULL,
   PRIMARY KEY (`idInfoTransporte`),
   INDEX `fk_InfoTransporte_Palete1_idx` (`Palete_qrCode` ASC) VISIBLE,
   INDEX `fk_InfoTransporte_Prateleira1_idx` (`Prateleira_prateleiraID` ASC) VISIBLE,
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `DSS_Project`.`Robot` (
   `RobotID` INT NOT NULL,
   `Disponivel` INT NULL,
   `Recolheu` INT NULL,
-  `InfoTransporte_idInfoTransporte` INT NOT NULL,
+  `InfoTransporte_idInfoTransporte` INT NULL,
   `Localizacao_idLocalizacao` INT NOT NULL,
   PRIMARY KEY (`RobotID`),
   INDEX `fk_Robot_InfoTransporte1_idx` (`InfoTransporte_idInfoTransporte` ASC) VISIBLE,
