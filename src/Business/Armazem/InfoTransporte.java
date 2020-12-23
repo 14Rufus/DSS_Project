@@ -24,15 +24,6 @@ public class InfoTransporte {
     }
 
     /**
-     * Altera o ID da Informação de Transporte
-     *
-     * @param idinfoTransporte novo ID
-     */
-    public void setIdinfoTransporte(int idinfoTransporte) {
-        this.idinfoTransporte = idinfoTransporte;
-    }
-
-    /**
      * Devolve o Código QR da Palete a ser transportada
      *
      * @return Código QR da Palete

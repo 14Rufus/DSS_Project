@@ -26,7 +26,7 @@ public class GestArmazem implements IGestArmazem {
      * @param qrCode Código QR da Palete a ser verificada
      * @return Existência da Palete na Zona de Receção
      */
-    public boolean existePaleteRececao(String qrCode){
+    private boolean existePaleteRececao(String qrCode){
         return zonaRececao.existePalete(qrCode);
     }
 
@@ -48,7 +48,7 @@ public class GestArmazem implements IGestArmazem {
      * @param r Robot
      * @return  Distância a que o Robot se encontra
      */
-    public int distancia(Robot r) {
+    private int distancia(Robot r) {
         String zona = r.getLocZona();
         int prat = r.getLocPrat();
 
@@ -67,7 +67,7 @@ public class GestArmazem implements IGestArmazem {
      *
      * @return  Robot disponível
      */
-    public Robot getRobotDisponivel (){
+    private Robot getRobotDisponivel (){
         Robot r, res = null;
         int dist, min = Integer.MAX_VALUE;
         Iterator<Robot> it = robots.values().iterator();

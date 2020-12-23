@@ -1,12 +1,6 @@
 package Business.Gestor;
 
-import Business.Armazem.Localizacao;
 import Data.GestorDAO;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Classe que representa o GestGestor

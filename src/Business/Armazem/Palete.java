@@ -36,15 +36,6 @@ public class Palete {
     }
 
     /**
-     * Devolve o ID da Zona em que a Palete se encontra
-     *
-     * @return ID da Zona
-     */
-    public String getZonaID() {
-        return localizacao.getZonaID();
-    }
-
-    /**
      * Altera ID da Zona
      *
      * @param zonaID novo ID da Zona
@@ -54,29 +45,11 @@ public class Palete {
     }
 
     /**
-     * Devolve o ID da Localização onde a Palete se encontra
-     *
-     * @return ID da Localização
-     */
-    public int getLocalizacaoID(){
-        return localizacao.getIdLocalizacao();
-    }
-
-    /**
      * Devolve a Localização da Palete
      *
      * @return LOcalização da Palete
      */
     public Localizacao getLocalizacao() {
         return localizacao;
-    }
-
-    /**
-     * Altera Localização da Palete
-     *
-     * @param localizacao nova Localização
-     */
-    public void setLocalizacao(Localizacao localizacao) {
-        this.localizacao = localizacao;
     }
 }

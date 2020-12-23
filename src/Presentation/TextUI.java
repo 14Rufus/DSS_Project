@@ -9,13 +9,8 @@ import Exceptions.*;
 import java.util.Scanner;
 
 public class TextUI {
-    // O model tem a 'lógica de negócio'.
     private ISGS model;
-
-    // Menus da aplicação
     private Menu menu;
-
-    // Scanner para leitura
     private Scanner scin;
 
     /**
@@ -25,7 +20,6 @@ public class TextUI {
      */
 
     public TextUI() {
-        // Criar o menu
         String[] opcoes = {
                 "Registar Palete",
                 "Notificar Robot",

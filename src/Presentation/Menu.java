@@ -8,9 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    // Varíavel de classe para suportar leitura
     private static Scanner is = new Scanner(System.in);
-    // variáveis de instância
     private List<String> opcoes;
     private int op;
 

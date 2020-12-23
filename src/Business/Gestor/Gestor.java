@@ -27,15 +27,6 @@ public class Gestor {
     }
 
     /**
-     * Altera o ID do Gestor
-     *
-     * @param idGestor novo ID do Gestor
-     */
-    public void setIdGestor(int idGestor) {
-        this.idGestor = idGestor;
-    }
-
-    /**
      * Devolve o nome do Gestor
      *
      * @return Nome do Gestor
@@ -45,30 +36,12 @@ public class Gestor {
     }
 
     /**
-     * Altera o nome do Gestor
-     *
-     * @param nome novo nome do Gestor
-     */
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    /**
      * Devolve a password do Gestor
      *
      * @return Password do Gestor
      */
     public String getPassword() {
         return password;
-    }
-
-    /**
-     * Ãltera a password do Gestor
-     *
-     * @param password nova password do Gestor
-     */
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     /**

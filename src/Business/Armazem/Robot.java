@@ -96,16 +96,6 @@ public class Robot {
     }
 
     /**
-     * Altera ID do Robot
-     *
-     * @param robotID ID do Robot
-     */
-
-    public void setRobotID(String robotID) {
-        this.robotID = robotID;
-    }
-
-    /**
      * Verifica se o Robot está disponível
      *
      * @return Disponibilidade do Robot
