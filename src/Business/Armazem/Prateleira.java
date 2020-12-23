@@ -60,7 +60,7 @@ public class Prateleira {
     }
 
     /**
-     * Devovle a capacidade da Prateleira
+     * Devolve a capacidade da Prateleira
      *
      * @return Capacidade da Prateleira
      */
@@ -99,7 +99,7 @@ public class Prateleira {
     }
 
     /**
-     * Devovle o espaço livre da Prateleira
+     * Devolve o espaço livre da Prateleira
      *
      * @return Espaço livre
      */
