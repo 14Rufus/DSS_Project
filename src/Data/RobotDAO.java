@@ -9,28 +9,6 @@ import java.sql.*;
 import java.util.*;
 
 public class RobotDAO {
-
-    /**
-     * Verifica se uma determinada Chave existe na base de dados dos Robots
-     *
-     * @param key Chave a ser verificada
-     * @return Validação da chave
-     */
-    public boolean containsKey(Object key) {
-        boolean r;
-        try (Connection conn =
-                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
-             Statement stm = conn.createStatement();
-             ResultSet rs =
-                     stm.executeQuery("SELECT RobotID FROM Robot WHERE robotID='"+key.toString()+"'")) {
-            r = rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new NullPointerException(e.getMessage());
-        }
-        return r;
-    }
-
     /**
      * Devolve um Robot da base de dados
      *
@@ -135,25 +113,6 @@ public class RobotDAO {
     }
 
     /**
-     * Remove um Robot da base de dados
-     *
-     * @param key Chave identificadora do Robot a ser removido
-     * @return Robot removido
-     */
-    public Robot remove(Object key) {
-        Robot t = this.get(key);
-        try (Connection conn =
-                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
-             Statement stm = conn.createStatement()) {
-            stm.executeUpdate("DELETE FROM Robot WHERE RobotID='"+key+"'");
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new NullPointerException(e.getMessage());
-        }
-        return t;
-    }
-
-    /**
      * Devolve todos os Robots da base de dados
      *
      * @return Robots da base de dados
@@ -185,28 +144,6 @@ public class RobotDAO {
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT count(*) FROM InfoTransporte")) {
-            if(rs.next()) {
-                i = rs.getInt(1);
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new NullPointerException(e.getMessage());
-        }
-        return i;
-    }
-
-    /**
-     * Calcula o número de Localizações
-     *
-     * @return Número de Localizações
-     */
-    public int sizeLocalizacao() {
-        int i = 0;
-        try (Connection conn =
-                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
-             Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT count(*) FROM Localizacao")) {
             if(rs.next()) {
                 i = rs.getInt(1);
             }
