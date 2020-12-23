@@ -6,6 +6,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Classe que representa o acesso aos dados do Gestor
+ */
+
 public class GestorDAO {
 
     public Gestor get() {
@@ -33,6 +37,13 @@ public class GestorDAO {
         }
         return p;
     }
+
+
+    /**
+     * Atualiza o estado de um gestor fornecido
+     *
+     * @param p gestor a ser atualizado
+     */
 
     public void updateGestor(Gestor p) {
         Gestor res = null;
