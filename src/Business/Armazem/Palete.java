@@ -1,3 +1,6 @@
+/**
+ * Classe que representa uma Palete
+ */
 package Business.Armazem;
 
 public class Palete {
@@ -11,22 +14,47 @@ public class Palete {
         localizacao = l;
     }
 
+    /**
+     * Devolve o Código QR da Palete
+     *
+     * @return Código QR
+     */
     public String getQrCode() {
         return qrCode;
     }
 
+    /**
+     * Devolve o Tipo de Material da Palete
+     *
+     * @return Tipo de Material da Palete
+     */
     public String getTipoMaterial() {
         return tipoMaterial;
     }
 
+    /**
+     * Devolve a Prateleira em que a Palete está localizada
+     *
+     * @return  Prateleira onde a Palete se encontra
+     */
     public int getPrateleira() {
         return localizacao.getPrateleira();
     }
 
+    /**
+     * Devolve o ID da Zona em que a Palete se encontra
+     *
+     * @return ID da Zona
+     */
     public String getZonaID() {
         return localizacao.getZonaID();
     }
 
+    /**
+     * Altera ID da Zona
+     *
+     * @param zonaID novo ID da Zona
+     */
     public void setZonaID(String zonaID) {
         localizacao.setZonaID(zonaID);
     }

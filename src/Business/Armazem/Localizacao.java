@@ -1,3 +1,7 @@
+/**
+ * Classe que representa a Localização
+ */
+
 package Business.Armazem;
 
 public class Localizacao {
@@ -11,26 +15,56 @@ public class Localizacao {
         this.zonaID = zonaID;
     }
 
+    /**
+     * Devovle ID da Localização
+     *
+     * @return ID da Localização
+     */
     public int getIdLocalizacao() {
         return idLocalizacao;
     }
 
+    /**
+     * Altera ID da Localização
+     *
+     * @param idLocalizacao novo ID da Localização
+     */
     public void setIdLocalizacao(int idLocalizacao) {
         this.idLocalizacao = idLocalizacao;
     }
 
+    /**
+     * Devolve a Prateleira da Localização
+     *
+     * @return  Inteiro que representa a Prateleira
+     */
     public int getPrateleira() {
         return prateleira;
     }
 
+    /**
+     * Devolve o da Zona
+     *
+     * @return ID da Zona
+     */
     public String getZonaID() {
         return zonaID;
     }
 
+    /**
+     * Altera a Prateleira da Localizção
+     *
+     * @param prateleira nova Pratelira da Localização
+     */
     public void setPrateleira(int prateleira) {
         this.prateleira = prateleira;
     }
 
+    /**
+     * Altera ID da Zona
+     *
+     * @param zonaID novo ID da Zona
+     */
     public void setZonaID(String zonaID) {
         this.zonaID = zonaID;
     }

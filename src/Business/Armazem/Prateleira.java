@@ -1,3 +1,7 @@
+/**
+ * Classe que representa uma Prateleira
+ */
+
 package Business.Armazem;
 import Business.Armazem.Palete;
 import Data.PaleteDAO;
@@ -18,23 +22,51 @@ public class Prateleira {
         paletes = new PaleteDAO();
     }
 
+    /**
+     * Devolve o ID da Prateleira
+     *
+     * @return ID da Prateleira
+     */
     public int getPrateleiraID() {
         return prateleiraID;
     }
 
+    /**
+     * Altera ocupação da Prateleira
+     *
+     * @param ocupacao Ocupação da Prateleira
+     */
     public void setOcupacao(int ocupacao) {
         this.ocupacao = ocupacao;
     }
 
+    /**
+     * Verifica se uma dada Palete é válida
+     *
+     * @param qrCode Código QR da Palete
+     * @return Validade da Palete
+     */
     public boolean isPaleteValida (String qrCode) {
         return !paletes.containsKey(qrCode);
     }
 
+    /**
+     * Adiciona uma Palete
+     *
+     * @param qrCode       Código QR da Palete
+     * @param tipoMaterial Tipo de Material da Palete
+     * @param zona         Zona da Prateleira
+     */
     public void addPalete (String qrCode, String tipoMaterial, String zona) {
         paletes.put(qrCode, new Palete(qrCode, tipoMaterial, prateleiraID, zona));
         ocupacao++;
     }
 
+    /**
+     * Devovle o espaço livre da Prateleira
+     *
+     * @return Espaço livre
+     */
     public int getEspacoLivre(){
         return (capacidade - ocupacao);
     }
