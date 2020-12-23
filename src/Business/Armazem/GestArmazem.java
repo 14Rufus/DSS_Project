@@ -52,20 +52,36 @@ public class GestArmazem implements IGestArmazem {
     }
     // ----------------------------
 
+    public int distancia(Robot r) {
+        String zona = r.getLocZona();
+        int prat = r.getLocPrat();
+
+        if(zona.equals("Rececao"))
+            return 0;
+        else {
+            if(prat < 6)
+                return 2 + (prat * 4);
+            else
+                return 7 + ((prat-5) * 4);
+        }
+    }
+
     /**
      * Devolve um Robot disponível
      *
      * @return  Robot disponível
      */
     public Robot getRobotDisponivel (){
-        Robot r = null, res = null;
-        Boolean isDisponivel = true;  //flag
+        Robot r, res = null;
+        int dist, min = Integer.MAX_VALUE;
         Iterator<Robot> it = robots.values().iterator();
-        while (it.hasNext() && isDisponivel) {
+
+        while (it.hasNext()) {
             r = it.next();
-            if (r.isDisponivel()){
-                isDisponivel = false;
+            dist = distancia(r);
+            if (r.isDisponivel() && dist < min){
                 res = r;
+                min = dist;
             }
         }
         return res;
@@ -77,17 +93,19 @@ public class GestArmazem implements IGestArmazem {
      * @param qrCode Código QR da Palete a ser transportada
      */
     public void notRobot(String qrCode){
-        Robot r = getRobotDisponivel();
-
-        if(r == null) System.out.println("aaaaa" + existePaleteRececao(qrCode));
-        if (!existePaleteRececao(qrCode) || r == null){
-            System.out.println("robot/palete não disponivel");//print na view
+        if (!existePaleteRececao(qrCode)){
+            System.out.println("robot/palete não disponivel");
         }
-        else{
-            int n = robots.sizeInfo();
-            r.setInfoTransporte(n + 1,qrCode, zonaArmazenamento.escolhePrateleira()); //ver quando n tem espaço
-            r.setDisponivel(false);
-            robots.put(r);
+        else {
+            Robot r = getRobotDisponivel();
+            if(r == null)
+                System.out.println("Não há robots");
+            else{
+                int n = robots.sizeInfo();
+                r.setInfoTransporte(n + 1,qrCode, zonaArmazenamento.escolhePrateleira()); //ver quando n tem espaço
+                r.setDisponivel(false);
+                robots.put(r);
+            }
         }
     }
 

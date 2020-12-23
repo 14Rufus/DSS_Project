@@ -26,10 +26,6 @@ public class Robot {
         return localizacao;
     }
 
-    public int getLocalizacaoID(){
-        return localizacao.getIdLocalizacao();
-    }
-
     public void setLocalizacao(String zona, int prat) {
         this.localizacao = localizacao;
     }
@@ -80,5 +76,13 @@ public class Robot {
             return infoTransporte.getQrCode();
         else
             return null;
+    }
+
+    public String getLocZona(){
+        return localizacao.getZonaID();
+    }
+
+    public int getLocPrat(){
+        return localizacao.getPrateleira();
     }
 }
