@@ -19,8 +19,8 @@ USE `DSS_Project` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Prateleira` (
   `prateleiraID` INT NOT NULL,
-  `capacidade` VARCHAR(45) NULL,
-  `ocupacao` VARCHAR(45) NULL,
+  `capacidade` INT NULL,
+  `ocupacao` INT NULL,
   PRIMARY KEY (`prateleiraID`))
 ENGINE = InnoDB;
 
