@@ -11,6 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema DSS_Project
 -- -----------------------------------------------------
+DROP SCHEMA `DSS_Project`;
 CREATE SCHEMA IF NOT EXISTS `DSS_Project` DEFAULT CHARACTER SET utf8 ;
 USE `DSS_Project` ;
 
@@ -19,8 +20,8 @@ USE `DSS_Project` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Prateleira` (
   `prateleiraID` INT NOT NULL,
-  `capacidade` VARCHAR(45) NULL,
-  `ocupacao` VARCHAR(45) NULL,
+  `capacidade` INT NULL,
+  `ocupacao` INT NULL,
   PRIMARY KEY (`prateleiraID`))
 ENGINE = InnoDB;
 
@@ -30,8 +31,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Localizacao` (
   `idLocalizacao` INT NOT NULL,
-  `zonaID` VARCHAR(10) NULL,
-  `Prateleira_prateleiraID` INT NOT NULL,
+  `zonaID` VARCHAR(20) NULL,
+  `Prateleira_prateleiraID` INT NULL,
   PRIMARY KEY (`idLocalizacao`),
   INDEX `fk_Localizacao_Prateleira1_idx` (`Prateleira_prateleiraID` ASC) VISIBLE,
   CONSTRAINT `fk_Localizacao_Prateleira1`
@@ -48,7 +49,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Palete` (
   `qrCode` VARCHAR(10) NOT NULL,
   `tipoMaterial` VARCHAR(30) NULL,
-  `zonaID` INT NULL,
   `Localizacao_idLocalizacao` INT NOT NULL,
   PRIMARY KEY (`qrCode`),
   INDEX `fk_Palete_Localizacao1_idx` (`Localizacao_idLocalizacao` ASC) VISIBLE,
@@ -67,7 +67,6 @@ CREATE TABLE IF NOT EXISTS `DSS_Project`.`InfoTransporte` (
   `idInfoTransporte` INT NOT NULL,
   `Palete_qrCode` VARCHAR(10) NOT NULL,
   `Prateleira_prateleiraID` INT NOT NULL,
-  `zonaID` VARCHAR(10) NULL,
   PRIMARY KEY (`idInfoTransporte`),
   INDEX `fk_InfoTransporte_Palete1_idx` (`Palete_qrCode` ASC) VISIBLE,
   INDEX `fk_InfoTransporte_Prateleira1_idx` (`Prateleira_prateleiraID` ASC) VISIBLE,
@@ -88,10 +87,10 @@ ENGINE = InnoDB;
 -- Table `DSS_Project`.`Robot`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DSS_Project`.`Robot` (
-  `RobotID` INT NOT NULL,
+  `RobotID` VARCHAR(10) NOT NULL,
   `Disponivel` INT NULL,
   `Recolheu` INT NULL,
-  `InfoTransporte_idInfoTransporte` INT NOT NULL,
+  `InfoTransporte_idInfoTransporte` INT NULL,
   `Localizacao_idLocalizacao` INT NOT NULL,
   PRIMARY KEY (`RobotID`),
   INDEX `fk_Robot_InfoTransporte1_idx` (`InfoTransporte_idInfoTransporte` ASC) VISIBLE,
