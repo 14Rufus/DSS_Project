@@ -27,7 +27,7 @@ public class TextUI {
     public TextUI() {
         // Criar o menu
         String[] opcoes = {
-                "Registar palete",
+                "Registar Palete",
                 "Notificar Robot",
                 "Recolher Palete",
                 "Entregar Palete",
@@ -64,7 +64,7 @@ public class TextUI {
                     break;
             }
         } while (menu.getOpcao()!=0); // A opção 0 é usada para sair do menu.
-        System.out.println("Até breve!...");
+        System.out.println("Até breve!");
         model.setOnline(false);
     }
 
@@ -86,7 +86,7 @@ public class TextUI {
      */
     private void registaPalete() {
         try {
-            String qrCode = menu.lerString("Qr-Code da palete: ");
+            String qrCode = menu.lerString("Introzua o QrCode da Palete: ");
             model.registarPalete(qrCode);
             menu.notRegistaPalete(qrCode);
         }
@@ -100,10 +100,11 @@ public class TextUI {
      */
     private void notificarRobot() {
         try {
-            String qrCode = menu.lerString("Insira um Qr-Code: ");
+            menu.listaPaletesPorNotificar(model.paletesPorNotificar());
+            String qrCode = menu.lerString("Introduza o QrCode da Palete: ");
             menu.notRobot(qrCode,model.notificarRobot(qrCode));
         }
-        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoExisteException | ArmazemCheioException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoExisteException | ArmazemCheioException | ListaPaletesPorNotificarException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -113,10 +114,11 @@ public class TextUI {
      */
     private void recolherPalete(){
         try {
-            String robotid = menu.lerString("Insira um robotID: ");
+            menu.listaRobotsPorRecolher(model.robotsPorRecolher());
+            String robotid = menu.lerString("Introduza o ID do Robot: ");
             menu.notRecolherPalete(model.recolherPalete(robotid),robotid);
         }
-        catch (NullPointerException | RobotNaoDisponivelException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | ListaRobotsPorRecolherException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -126,10 +128,11 @@ public class TextUI {
      */
     private void entregarPalete(){
         try {
-            String robotid = menu.lerString("Insira um robotID: ");
+            menu.listaRobotsPorEntregar(model.robotsPorEntregar());
+            String robotid = menu.lerString("Introduza o ID do Robot: ");
             menu.notEntregarPalete(model.entregarPalete(robotid),robotid);
         }
-        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoRecolhidaException e) {
+        catch (NullPointerException | RobotNaoDisponivelException | PaleteNaoRecolhidaException | ListaRobotsPorEntregarException e) {
             System.out.println(e.getMessage());
         }
     }

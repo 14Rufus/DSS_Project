@@ -170,4 +170,45 @@ public class GestArmazem implements IGestArmazem {
         return l;
     }
 
+    /**
+     * Lista das Paletes por Notificar
+     *
+     * @return Lista das Paletes por Notifcar
+     */
+    public List<String> paletesPorNotificar() throws ListaPaletesPorNotificarException {
+        List<String> l = zonaRececao.paletesPorNotificar();
+
+        if(l.isEmpty())
+            throw new ListaPaletesPorNotificarException("Não existem Paletes paor notificar");
+
+        return l;
+    }
+
+    /**
+     * Lista dos Robots por Recolher
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorRecolher() throws ListaRobotsPorRecolherException {
+        List<String> l = robots.robotsPorRecolher();
+
+        if(l.isEmpty())
+            throw new ListaRobotsPorRecolherException("Não existem Paletes por recolher");
+
+        return l;
+    }
+
+    /**
+     * Lista dos Robots por Entregar
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorEntregar() throws ListaRobotsPorEntregarException {
+        List<String> l = robots.robotsPorEntregar();
+
+        if(l.isEmpty())
+            throw new ListaRobotsPorEntregarException("Não existem Paletes por entregar");
+
+        return l;
+    }
 }

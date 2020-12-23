@@ -13,4 +13,7 @@ public interface ISGS {
     boolean isOnline();
     void setOnline(boolean online);
     boolean validaLoginGestor (String password);
+    List<String> paletesPorNotificar() throws ListaPaletesPorNotificarException;
+    List<String> robotsPorEntregar() throws ListaRobotsPorEntregarException;
+    List<String> robotsPorRecolher() throws ListaRobotsPorRecolherException;
 }

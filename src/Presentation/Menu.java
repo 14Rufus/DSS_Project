@@ -34,13 +34,16 @@ public class Menu {
 
     /** Apresentar o menu */
     private void showMenu() {
-        System.out.println("\n *** Menu *** ");
+        System.out.println("\n----------------------------");
+        System.out.println(" Sistema de Gestao de Stock");
+        System.out.println("----------------------------");
         for (int i=0; i<this.opcoes.size(); i++) {
-            System.out.print(i+1);
-            System.out.print(" - ");
+            System.out.print(" " + (i+1));
+            System.out.print(" | ");
             System.out.println(this.opcoes.get(i));
         }
-        System.out.println("0 - Sair");
+        System.out.println(" 0 | Sair");
+        System.out.println("----------------------------");
     }
 
     /**
@@ -141,5 +144,41 @@ public class Menu {
         System.out.println("\nListagem das Paletes:");
         for(String s:l)
             System.out.println(s);
+    }
+
+    /**
+     * Imprime a Lista das Paletes por Notificar
+     *
+     * @param l Lista de Paletes
+     */
+    public void listaPaletesPorNotificar(List<String> l) {
+        System.out.print("Paletes por notificar: ");
+        for(String s : l)
+            System.out.print(s + " ");
+        System.out.println();
+    }
+
+    /**
+     * Imprime a Lista dos Robots por Recolher
+     *
+     * @param l Lista de Robots
+     */
+    public void listaRobotsPorRecolher(List<String> l) {
+        System.out.print("Robots por recolher: ");
+        for(String s : l)
+            System.out.print(s + " ");
+        System.out.println();
+    }
+
+    /**
+     * Imprime a Lista dos Robots por Recolher
+     *
+     * @param l Lista de Robots
+     */
+    public void listaRobotsPorEntregar(List<String> l) {
+        System.out.print("Robots por entregar: ");
+        for(String s : l)
+            System.out.print(s + " ");
+        System.out.println();
     }
 }

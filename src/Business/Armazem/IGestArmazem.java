@@ -10,4 +10,7 @@ public interface IGestArmazem {
     String recolheP(String robotID) throws RobotNaoDisponivelException;
     String entregaP(String robotID) throws RobotNaoDisponivelException, PaleteNaoRecolhidaException;
     List<String> getListagem() throws ListagemVaziaException;
+    List<String> paletesPorNotificar() throws ListaPaletesPorNotificarException;
+    List<String> robotsPorRecolher() throws ListaRobotsPorRecolherException;
+    List<String> robotsPorEntregar() throws ListaRobotsPorEntregarException;
 }

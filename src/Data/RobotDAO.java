@@ -6,10 +6,7 @@ import Business.Armazem.InfoTransporte;
 import Business.Armazem.Localizacao;
 import Business.Armazem.Robot;
 import java.sql.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class RobotDAO {
 
@@ -219,6 +216,52 @@ public class RobotDAO {
             throw new NullPointerException(e.getMessage());
         }
         return i;
+    }
+
+    /**
+     * Lista dos Robots por Recolher
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorRecolher() {
+        List<String> l = new ArrayList<>();
+
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("select robotID from Robot where Disponivel = "+"0"+" and Recolheu = "+"0"+" ;")) {
+            while (rs.next()) {
+                l.add(rs.getString("robotID"));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return l;
+    }
+
+    /**
+     * Lista dos Robots por Entregar
+     *
+     * @return Lista dos Robots
+     */
+    public List<String> robotsPorEntregar() {
+        List<String> l = new ArrayList<>();
+
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("select robotID from Robot where Disponivel = "+"0"+" and Recolheu = "+"1"+" ;")) {
+            while (rs.next()) {
+                l.add(rs.getString("robotID"));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return l;
     }
 
 }
