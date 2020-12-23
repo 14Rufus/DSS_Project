@@ -1,6 +1,7 @@
 package Business.Gestor;
 
 import Business.Armazem.Localizacao;
+import Data.GestorDAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 public class GestGestor implements IGestGestor {
-    public Gestor gestor;
+    public GestorDAO gestor;
     public Map<String, Localizacao> listagem;
 
     public GestGestor() {
         listagem = new HashMap<>();
-        //gestor = new GestorDAO();
-        gestor = new Gestor(1,"luis","luis",false);
+        gestor = new GestorDAO();
+        //gestor = new Gestor(1,"luis","luis",false);
     }
 
     public List<String> consultarL(){
@@ -26,22 +27,25 @@ public class GestGestor implements IGestGestor {
     }
 
     public boolean validaLoginGestor(String password) {
-        return gestor.validaCredenciaisGestor(password);
+        Gestor g = gestor.get();
+        return g.validaCredenciaisGestor(password);
     }
 
     public void addLocalizacao(String l) {
         String [] list;
         list = l.split(".",3);
         System.out.println(list[0]);
-        //System.out.println(list[0]+"  "+list[1]+"  "+list[2]);
-        listagem.putIfAbsent(list[0],new Localizacao(0,list[2]));
+        //listagem.putIfAbsent(list[0],new Localizacao(0,list[2]));
     }
 
     public boolean isOnline() {
-        return gestor.isOnline();
+        Gestor g = gestor.get();
+        return g.isOnline();
     }
 
     public void setOnline(boolean online) {
-        gestor.setOnline(online);
+        Gestor g = gestor.get();
+        g.setOnline(online);
+        gestor.updateGestor(g);
     }
 }

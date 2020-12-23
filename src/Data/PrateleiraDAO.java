@@ -16,7 +16,7 @@ public class PrateleiraDAO {
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM prateleiras WHERE QrCode='"+key+"'")) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM Prateleira WHERE prateleiraID='"+key+"'")) {
             if (rs.next()) {
                 p = new Prateleira(rs.getInt("prateleiraID"),
                         rs.getInt("capacidade"),
@@ -31,13 +31,13 @@ public class PrateleiraDAO {
         return p;
     }
 
-    public void updatePrateleira(String key, Prateleira p) {
+    public void updatePrateleira(Prateleira p) {
         Gestor res = null;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
 
-            stm.executeUpdate("INSERT INTO paletes VALUES ("+p.getPrateleiraID()+","+p.getCapacidade()+","+
+            stm.executeUpdate("INSERT INTO Prateleira VALUES ("+p.getPrateleiraID()+","+p.getCapacidade()+","+
                     p.getOcupacao()+")" +
                     "ON DUPLICATE KEY UPDATE Capacidade=Values(Capacidade),Ocupacao=Values(Ocupacao)");
 
@@ -45,5 +45,23 @@ public class PrateleiraDAO {
             e.printStackTrace();
             throw new NullPointerException(e.getMessage());
         }
+    }
+
+    public int escolhePrateleira() {
+        int p = 0;
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement()) {
+
+            ResultSet rs = stm.executeQuery("SELECT * FROM Prateleira WHERE Ocupacao < 5");
+
+            if(rs.next())
+                p = rs.getInt("prateleiraID");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return p;
     }
 }

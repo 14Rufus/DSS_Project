@@ -14,6 +14,12 @@ public class Palete {
         localizacao = l;
     }
 
+    public Palete(String qrCode, String tipoMaterial,int prat,String zona,int id) {
+        this.qrCode = qrCode;
+        this.tipoMaterial = tipoMaterial;
+        localizacao = new Localizacao(id,prat,zona);
+    }
+
     /**
      * Devolve o Código QR da Palete
      *

@@ -50,6 +50,22 @@ public class Prateleira {
         return !paletes.containsKey(qrCode);
     }
 
+    public void setPrateleiraID(int prateleiraID) {
+        this.prateleiraID = prateleiraID;
+    }
+
+    public int getCapacidade() {
+        return capacidade;
+    }
+
+    public void setCapacidade(int capacidade) {
+        this.capacidade = capacidade;
+    }
+
+    public int getOcupacao() {
+        return ocupacao;
+    }
+
     /**
      * Adiciona uma Palete
      *
@@ -58,7 +74,8 @@ public class Prateleira {
      * @param zona         Zona da Prateleira
      */
     public void addPalete (String qrCode, String tipoMaterial, String zona) {
-        paletes.put(qrCode, new Palete(qrCode, tipoMaterial, prateleiraID, zona));
+        int n = paletes.sizeLocalizacao();
+        paletes.put(new Palete(qrCode, tipoMaterial, prateleiraID, zona,n+1));
         ocupacao++;
     }
 

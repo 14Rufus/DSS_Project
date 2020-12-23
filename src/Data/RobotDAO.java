@@ -8,19 +8,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class RobotDAO implements Map<String, Robot> {
+public class RobotDAO {
 
-    @Override
-    public int size() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public boolean containsKey(Object key) {
         boolean r;
         try (Connection conn =
@@ -36,12 +25,6 @@ public class RobotDAO implements Map<String, Robot> {
         return r;
     }
 
-    @Override
-    public boolean containsValue(Object value) {
-        return false;
-    }
-
-    @Override
     public Robot get(Object key) {
         Robot p = null;
         try (Connection conn =
@@ -80,7 +63,6 @@ public class RobotDAO implements Map<String, Robot> {
         return p;
     }
 
-    @Override
     public Robot put(String key, Robot r) {
         Robot res = null;
         InfoTransporte i = r.getInfoTransporte();
@@ -112,7 +94,6 @@ public class RobotDAO implements Map<String, Robot> {
         return res;
     }
 
-    @Override
     public Robot remove(Object key) {
         Robot t = this.get(key);
         try (Connection conn =
@@ -126,22 +107,6 @@ public class RobotDAO implements Map<String, Robot> {
         return t;
     }
 
-    @Override
-    public void putAll(Map<? extends String, ? extends Robot> m) {
-
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public Set<String> keySet() {
-        return null;
-    }
-
-    @Override
     public Collection<Robot> values() {
         Collection<Robot> col = new HashSet<>();
         try (Connection conn =
@@ -158,8 +123,38 @@ public class RobotDAO implements Map<String, Robot> {
         return col;
     }
 
-    @Override
-    public Set<Entry<String, Robot>> entrySet() {
-        return null;
+    public int sizeInfo() {
+        int i = 0;
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("SELECT count(*) FROM InfoTransporte")) {
+            if(rs.next()) {
+                i = rs.getInt(1);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return i;
     }
+
+    public int sizeLocalizacao() {
+        int i = 0;
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("SELECT count(*) FROM Localizacao")) {
+            if(rs.next()) {
+                i = rs.getInt(1);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return i;
+    }
+
 }

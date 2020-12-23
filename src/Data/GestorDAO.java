@@ -8,12 +8,12 @@ import java.util.Set;
 
 public class GestorDAO {
 
-    public Gestor get(Object key) {
+    public Gestor get() {
         Gestor p = null;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT * FROM gestores WHERE ID='"+key+"'")) {
+             ResultSet rs = stm.executeQuery("SELECT * FROM Gestor WHERE idGestor="+1+" ")) {
             if (rs.next()) {
                 int on = rs.getInt("Online");
                 boolean online = false;
@@ -34,7 +34,7 @@ public class GestorDAO {
         return p;
     }
 
-    public void updateGestor(String key, Gestor p) {
+    public void updateGestor(Gestor p) {
         Gestor res = null;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
@@ -43,7 +43,7 @@ public class GestorDAO {
             if(p.isOnline())
                 on = 1;
 
-            stm.executeUpdate("INSERT INTO paletes VALUES ('"+p.getIdGestor()+"','"+p.getNome()+"','"+
+            stm.executeUpdate("INSERT INTO Gestor VALUES ("+p.getIdGestor()+",'"+p.getNome()+"','"+
                     p.getPassword()+"',"+on+")" +
                     "ON DUPLICATE KEY UPDATE Nome=Values(Nome), Password=Values(Password),Online=Values(Online)");
 
@@ -52,5 +52,4 @@ public class GestorDAO {
             throw new NullPointerException(e.getMessage());
         }
     }
-
 }

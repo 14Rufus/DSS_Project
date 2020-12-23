@@ -1,41 +1,28 @@
 package Business.Armazem;
+import Data.PrateleiraDAO;
+
 import java.util.HashMap;
 
 import java.util.Map;
 
 public class ZonaArmazenamento extends Zona {
     private String tipoZona;
-    private Map<Integer, Prateleira> prateleiras;
+    private PrateleiraDAO prateleiras;
 
     public ZonaArmazenamento(String zonaID,String tipo) {
         super(zonaID);
         tipoZona = tipo;
-        prateleiras = new HashMap<>();
-        for(int i = 1;i<=5;i++)
-            prateleiras.put(i,new Prateleira(i,5,0));
-    }
-
-    public boolean isPaleteValida (String qrCode) {
-        boolean b = true;
-        for (Prateleira p: prateleiras.values())
-            if(!p.isPaleteValida(qrCode))
-                b = false;
-        return b;
+        prateleiras = new PrateleiraDAO();
     }
 
     public int escolhePrateleira(){
-        Prateleira prateleira = null;
-        int max = 0;
-        for(Prateleira p : prateleiras.values()){
-            if(p.getEspacoLivre() > max){
-                prateleira = p;
-                max = p.getEspacoLivre();
-            }
-        }
-        return prateleira.getPrateleiraID();
+        return prateleiras.escolhePrateleira();
     }
 
-    public void arrumaPalete (String zonaID,int prateleira,String qrCode, String tipoMaterial) {
-        prateleiras.get(prateleira).addPalete(qrCode,tipoMaterial,zonaID);
+    public void arrumaPalete (int prateleira,String qrCode, String tipoMaterial) {
+        Prateleira p = prateleiras.get(prateleira);
+        p.addPalete(qrCode,tipoMaterial,"Armazenamento");
+        prateleiras.updatePrateleira(p);
+
     }
 }

@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.TreeSet;
 
 public class ZonaRececao extends Zona {
-    private Map<String,Palete> paletes;
+    private PaleteDAO paletes;
 
     public ZonaRececao(String zonaID) {
         super(zonaID);
-        paletes = PaleteDAO.getInstance();
+        paletes = new PaleteDAO();
     }
 
     /**
@@ -36,8 +36,9 @@ public class ZonaRececao extends Zona {
      * @param tipoMaterial  Tipo de Material da Palete
      */
     public void acrescentaPalete (String qrCode, String tipoMaterial) {
-        Palete palete = new Palete(qrCode, tipoMaterial, 0, super.getZonaID());
-        paletes.put(qrCode, palete);
+        int n = paletes.sizeLocalizacao();
+        Palete palete = new Palete(qrCode, tipoMaterial, 0, super.getZonaID(),n + 1);
+        paletes.put(palete);
     }
 
     /**

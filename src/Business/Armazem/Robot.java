@@ -34,8 +34,8 @@ public class Robot {
         this.localizacao = localizacao;
     }
 
-    public void setInfoTransporte(String qr, int prat, String zona) {
-        infoTransporte = new InfoTransporte(qr,prat,zona);
+    public void setInfoTransporte(int id,String qr, int prat) {
+        infoTransporte = new InfoTransporte(id,qr,prat);
     }
 
     public InfoTransporte getInfoTransporte() {
@@ -66,13 +66,6 @@ public class Robot {
 
     public void setRecolheu(boolean recolheu) {
         this.recolheu = recolheu;
-    }
-
-    public String getZonaID(){
-        if(infoTransporte != null)
-            return infoTransporte.getZonaID();
-        else
-            return null;
     }
 
     public int getPrateleira(){

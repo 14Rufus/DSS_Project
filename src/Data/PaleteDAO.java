@@ -47,17 +47,18 @@ public class PaleteDAO{
         return p;
     }
 
-    public Palete put(String key, Palete p) {
+    public Palete put(Palete p) {
         Palete res = null;
         Localizacao l = p.getLocalizacao();
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
 
-            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"',"+p.getLocalizacaoID()+")" +
-                    "ON DUPLICATE KEY UPDATE TipoMaterial=Values(TipoMaterial), Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao)");
             stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
                     "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
+
+            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"',"+p.getLocalizacaoID()+")" +
+                    "ON DUPLICATE KEY UPDATE TipoMaterial=Values(TipoMaterial), Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao)");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,4 +66,22 @@ public class PaleteDAO{
         }
         return res;
     }
+
+    public int sizeLocalizacao() {
+        int i = 0;
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("SELECT count(*) FROM Localizacao")) {
+            if(rs.next()) {
+                i = rs.getInt(1);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return i;
+    }
+
 }
