@@ -1,7 +1,3 @@
-/**
- *  Classe que representa uma Zona
- */
-
 package Business.Armazem;
 
 /**
