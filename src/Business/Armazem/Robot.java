@@ -30,7 +30,7 @@ public class Robot {
         return localizacao.getIdLocalizacao();
     }
 
-    public void setLocalizacao(Localizacao localizacao) {
+    public void setLocalizacao(String zona, int prat) {
         this.localizacao = localizacao;
     }
 
@@ -42,7 +42,7 @@ public class Robot {
         return infoTransporte;
     }
 
-    public void removeInfo(){infoTransporte = null;}
+    public void removeInfo(){ infoTransporte = null;}
 
     public String getRobotID() {
         return robotID;

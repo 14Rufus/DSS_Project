@@ -19,10 +19,9 @@ public class ZonaArmazenamento extends Zona {
         return prateleiras.escolhePrateleira();
     }
 
-    public void arrumaPalete (int prateleira,String qrCode, String tipoMaterial) {
+    public void arrumaPalete (int prateleira,String qrCode) {
         Prateleira p = prateleiras.get(prateleira);
-        p.addPalete(qrCode,tipoMaterial,"Armazenamento");
+        p.addPalete(qrCode,"Armazenamento");
         prateleiras.updatePrateleira(p);
-
     }
 }

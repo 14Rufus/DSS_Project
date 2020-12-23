@@ -70,12 +70,11 @@ public class Prateleira {
      * Adiciona uma Palete
      *
      * @param qrCode       Código QR da Palete
-     * @param tipoMaterial Tipo de Material da Palete
      * @param zona         Zona da Prateleira
      */
-    public void addPalete (String qrCode, String tipoMaterial, String zona) {
+    public void addPalete (String qrCode, String zona) {
         int n = paletes.sizeLocalizacao();
-        paletes.put(new Palete(qrCode, tipoMaterial, prateleiraID, zona,n+1));
+        paletes.put(new Palete(qrCode, "Parecivel", prateleiraID, zona,n+1));
         ocupacao++;
     }
 

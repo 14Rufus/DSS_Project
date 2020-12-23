@@ -27,18 +27,20 @@ public class PaleteDAO{
 
     public Palete get(String key) {
         Palete p = null;
+        Localizacao l = null;
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
              ResultSet rs = stm.executeQuery("SELECT * FROM Palete WHERE QrCode='"+key+"'")) {
             if (rs.next()) {
-                Localizacao l;
-                ResultSet rsL = stm.executeQuery("SELECT * FROM Localizacao WHERE idLocalizacao='"+rs.getInt("Localizacao_idLocalizacao")+"'");
-                l = new Localizacao(rsL.getInt("idLocalizacao"),rsL.getInt("Prateleira_prateleiraID"),rsL.getString("zonaID"));
-                p = new Palete(rs.getString("qrCode"),
-                        rs.getString("tipoMaterial"),l);
-            } else {
-                p = null;
+                String qr = rs.getString("qrCode");
+                String tipo = rs.getString("tipoMaterial");
+
+                ResultSet rsL = stm.executeQuery("SELECT * FROM Localizacao WHERE idLocalizacao=" + rs.getInt("Localizacao_idLocalizacao") + "");
+                if (rsL.next()){
+                    l = new Localizacao(rsL.getInt("idLocalizacao"), rsL.getInt("Prateleira_prateleiraID"), rsL.getString("zonaID"));
+                }
+                p = new Palete(qr, tipo, l);
             }
         } catch (SQLException e) {
             e.printStackTrace();

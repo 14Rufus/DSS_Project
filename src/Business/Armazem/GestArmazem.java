@@ -6,7 +6,6 @@ package Business.Armazem;
 import Data.RobotDAO;
 
 import java.util.Iterator;
-import java.util.Map;
 
 public class GestArmazem implements IGestArmazem {
     private RobotDAO robots;
@@ -17,31 +16,6 @@ public class GestArmazem implements IGestArmazem {
         this.robots = new RobotDAO();
         zonaRececao = new ZonaRececao("Receção");
         zonaArmazenamento = new ZonaArmazenamento("z1","a");
-    }
-
-    /**
-     * Adiciona Robot ao Armazém
-     *
-     * @param robotID do Robot a adicionar
-     */
-    public void addRobot(String robotID) {
-        robots.put(robotID,new Robot(robotID));
-    }
-
-    /**
-     * Remove Robot do Armazém
-     *
-     * @param robotID ID do Robot a remover
-     */
-    public void remRobot(String robotID) {
-        robots.remove(robotID);
-    }
-
-    /**
-     * Devolve todos os Robots do Armazém
-     */
-    public void getRobots(){
-        System.out.println(robots.values().toString());
     }
 
     /**
@@ -104,6 +78,7 @@ public class GestArmazem implements IGestArmazem {
      */
     public void notRobot(String qrCode){
         Robot r = getRobotDisponivel();
+
         if(r == null) System.out.println("aaaaa" + existePaleteRececao(qrCode));
         if (!existePaleteRececao(qrCode) || r == null){
             System.out.println("robot/palete não disponivel");//print na view
@@ -112,7 +87,7 @@ public class GestArmazem implements IGestArmazem {
             int n = robots.sizeInfo();
             r.setInfoTransporte(n + 1,qrCode, zonaArmazenamento.escolhePrateleira()); //ver quando n tem espaço
             r.setDisponivel(false);
-            robots.put(r.getQrCode(),r);
+            robots.put(r);
         }
     }
 
@@ -132,7 +107,8 @@ public class GestArmazem implements IGestArmazem {
         String qrCode = r.getQrCode();
         zonaRececao.recolhePalete(qrCode);
         r.setRecolheu(true);
-        robots.put(robotID,r);
+        r.setLocalizacao("Rececao", 0);
+        robots.put(r);
         return true;
     }
 
@@ -147,14 +123,15 @@ public class GestArmazem implements IGestArmazem {
         if(r == null || r.isDisponivel() || !r.isPaleteRecolhida())
             return false;
 
-        String  qrCode = r.getQrCode();
+        String qrCode = r.getQrCode();
         int prateleira = r.getPrateleira();
 
-        zonaArmazenamento.arrumaPalete(prateleira,qrCode,qrCode);
+        zonaArmazenamento.arrumaPalete(prateleira,qrCode);
         r.setDisponivel(true);
         r.setRecolheu(false);
+        r.setLocalizacao("Armazenamento", r.getPrateleira());
         r.removeInfo();
-        robots.put(robotID,r);
+        robots.put(r);
 
         return true;
     }
