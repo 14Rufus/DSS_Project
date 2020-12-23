@@ -55,6 +55,9 @@ public class TextUI {
                 case 4:
                     entregarPalete();
                     break;
+                case 5:
+                    consultarListagem();
+                    break;
             }
         } while (menu.getOpcao()!=0); // A opção 0 é usada para sair do menu.
         System.out.println("Até breve!...");
@@ -73,9 +76,9 @@ public class TextUI {
 
     private void registaPalete() {
         try {
-            System.out.println("Qr-Code da palete: ");
-            String rid = scin.nextLine();
-            model.registarPalete(rid,"Materia Perecivel");
+            String qrCode = menu.lerString("Qr-Code da palete: ");
+            String materia = menu.lerString("Insira o tipo de material (Perecivél/Não Perecivel): ");
+            menu.notRegistaPalete(qrCode,model.registarPalete(qrCode,materia));
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -84,9 +87,8 @@ public class TextUI {
 
     private void notificarRobot() {
         try {
-            System.out.println("Insira um Qr-Code: ");
-            String rid = scin.nextLine();
-            model.notificarRobot(rid);
+            String qrCode = menu.lerString("Insira um Qr-Code: ");
+            menu.notRobot(qrCode,model.notificarRobot(qrCode));
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -95,9 +97,8 @@ public class TextUI {
 
     private void recolherPalete(){
         try {
-            System.out.println("Insira um robotID: ");
-            String rid = scin.nextLine();
-            model.recolherPalete(rid);
+            String robotid = menu.lerString("Insira um robotID: ");
+            menu.notRecolherPalete(model.recolherPalete(robotid),robotid);
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
@@ -106,12 +107,15 @@ public class TextUI {
 
     private void entregarPalete(){
         try {
-            System.out.println("Insira um robotID: ");
-            String rid = scin.nextLine();
-            model.entregarPalete(rid);
+            String robotid = menu.lerString("Insira um robotID: ");
+            menu.notEntregarPalete(model.entregarPalete(robotid),robotid);
         }
         catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    private void consultarListagem(){
+        menu.imprimeListagem(model.consultarListagem());
     }
 }

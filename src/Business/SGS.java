@@ -15,31 +15,33 @@ public class SGS implements ISGS {
         gestGestor = new GestGestor();
     }
 
-    public void registarPalete(String qrCode,String tipoMaterial){
-        gestArmazem.registaPalete(qrCode,tipoMaterial);
-        gestGestor.addLocalizacao(qrCode+".0.Rececao");
+    public boolean registarPalete(String qrCode,String tipoMaterial){
+        boolean res = gestArmazem.registaPalete(qrCode,tipoMaterial);
+        //gestGestor.addNotRegisto();
+        return res;
     }
 
-    public void notificarRobot(String qrCode) {
-        gestArmazem.notRobot(qrCode);
+    public String notificarRobot(String qrCode) {
+        String res = gestArmazem.notRobot(qrCode);
+        return res;
     }
 
-    public void recolherPalete(String robotID){
-        String l;
-        gestArmazem.recolheP(robotID);
+    public String recolherPalete(String robotID){
+        String res = gestArmazem.recolheP(robotID);
         //if(l != null)
             //gestGestor.addLocalizacao(l);
+        return res;
     }
 
-    public void entregarPalete(String robotID){
-        String l;
-        gestArmazem.entregaP(robotID);
+    public String entregarPalete(String robotID){
+        String res = gestArmazem.entregaP(robotID);
         //if(l != null)
             //gestGestor.addLocalizacao(l);
+        return res;
     }
 
     public List<String> consultarListagem() {
-        return gestGestor.consultarL();
+        return gestArmazem.getListagem();
     }
 
     public boolean isOnline() {

@@ -1,8 +1,11 @@
 package Business.Armazem;
 
+import java.util.List;
+
 public interface IGestArmazem {
-    void registaPalete (String qrCode, String tipoMaterial);
-    void notRobot(String qrCode);
-    boolean recolheP(String robotID);
-     boolean entregaP(String robotID);
+    boolean registaPalete (String qrCode, String tipoMaterial);
+    String notRobot(String qrCode);
+    String recolheP(String robotID);
+    String entregaP(String robotID);
+    List<String> getListagem();
 }

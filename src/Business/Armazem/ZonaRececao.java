@@ -5,11 +5,8 @@
 package Business.Armazem;
 import Data.PaleteDAO;
 
+import java.util.*;
 import java.util.Collection;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeSet;
 
 public class ZonaRececao extends Zona {
     private PaleteDAO paletes;
@@ -60,5 +57,9 @@ public class ZonaRececao extends Zona {
         Palete p = paletes.get(qrCode);
         p.setZonaID(null);
         paletes.put(p);
+    }
+
+    public List<String> getListagem(){
+        return paletes.listLocalizacoes();
     }
 }

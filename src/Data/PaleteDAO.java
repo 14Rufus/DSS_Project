@@ -4,9 +4,7 @@ import Business.Armazem.Localizacao;
 import Business.Armazem.Palete;
 
 import java.sql.*;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PaleteDAO{
 
@@ -87,6 +85,33 @@ public class PaleteDAO{
             throw new NullPointerException(e.getMessage());
         }
         return i;
+    }
+
+    public List<String> listLocalizacoes(){
+        List<String> l = new ArrayList<>();
+        String line,qr;
+        try (Connection conn =
+                     DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
+             Statement stm = conn.createStatement();
+             ResultSet rs = stm.executeQuery("select p.qrCode, l.zonaID, l.Prateleira_prateleiraID from Palete p, Localizacao l where p.Localizacao_idLocalizacao = l.idLocalizacao;")) {
+            while (rs.next()) {
+                line = "Qr-Code: " + rs.getString("QrCode") + ", ZonaID: ";
+
+                if (rs.getString("zonaID")== null)
+                    line += "A ser transportada.";
+                else if (rs.getString("Prateleira_prateleiraID") == null)
+                    line += "Receção";
+                else
+                    line += "Armazém, Prateleira: " + rs.getInt("Prateleira_prateleiraID");
+
+                l.add(line);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new NullPointerException(e.getMessage());
+        }
+        return l;
     }
 
 }

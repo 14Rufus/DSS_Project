@@ -40,10 +40,20 @@ public class Menu {
         System.out.println("0 - Sair");
     }
 
+    public String lerString(String message) {
+        String line;
+
+        do{
+            System.out.println(message);
+            line = is.nextLine();
+        } while (line.isEmpty());
+
+        return line;
+    }
+
     /** Ler uma opção válida */
     private int lerOpcao() {
         int op;
-        //Scanner is = new Scanner(System.in);
 
         System.out.print("Opção: ");
         try {
@@ -71,5 +81,50 @@ public class Menu {
         System.out.println("\n *** Login *** ");
 
         System.out.print("Introduza password: ");
+    }
+
+    public void notRegistaPalete(String qrCode,boolean b) {
+        String msg;
+        if(b)
+            msg = "A palete com o Qr-Code: " + qrCode + ", foi registada com sucesso.";
+        else
+            msg = "A palete com o Qr-Code: " + qrCode + ", não foi registada com sucesso.";
+
+        System.out.println(msg);
+    }
+
+    public void notRobot(String qrCode,String robot) {
+        String msg;
+        if(robot == null)
+            msg = "O robot com o robotID: " + robot + ", não foi notificado com sucesso.";
+        else
+            msg = "O robot com o robotID: " + robot + ", foi notificado para recolher a palete: " + qrCode+ ".";
+
+        System.out.println(msg);
+    }
+
+    public void notRecolherPalete(String qrCode,String robot) {
+        String msg;
+        if(robot == null)
+            msg = "O robot com o robotID: " + robot + ", não recolheu a palete com sucesso.";
+        else
+            msg = "O robot com o robotID: " + robot + ", recolheu a palete: " + qrCode+ " com sucesso.";
+
+        System.out.println(msg);
+    }
+
+    public void notEntregarPalete(String qrCode,String robot) {
+        String msg;
+        if(robot == null)
+            msg = "O robot com o robotID: " + robot + ", não entregou a palete com sucesso.";
+        else
+            msg = "O robot com o robotID: " + robot + ", entregou a palete: " + qrCode+ " com sucesso.";
+
+        System.out.println(msg);
+    }
+
+    public void imprimeListagem(List<String> l){
+        for(String s:l)
+            System.out.println(s);
     }
 }
