@@ -53,11 +53,14 @@ public class PaleteDAO{
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement()) {
+            if(l.getPrateleira() == 0)
+                stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',null)" +
+                        "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
+            else
+                stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
+                        "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
 
-            stm.executeUpdate("INSERT INTO Localizacao VALUES ("+l.getIdLocalizacao()+",'"+l.getZonaID()+"',"+l.getPrateleira()+")" +
-                    "ON DUPLICATE KEY UPDATE zonaID=Values(zonaID), Prateleira_prateleiraID=Values(Prateleira_prateleiraID)");
-
-            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"',"+p.getLocalizacaoID()+")" +
+            stm.executeUpdate("INSERT INTO Palete VALUES ('"+p.getQrCode()+"','"+p.getTipoMaterial()+"',"+l.getIdLocalizacao()+")" +
                     "ON DUPLICATE KEY UPDATE TipoMaterial=Values(TipoMaterial), Localizacao_idLocalizacao=Values(Localizacao_idLocalizacao)");
 
         } catch (SQLException e) {

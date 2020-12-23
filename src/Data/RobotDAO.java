@@ -40,9 +40,13 @@ public class RobotDAO {
 
                 Localizacao l;
                 ResultSet rsL = stm.executeQuery(
-                        "SELECT * FROM Localizacao WHERE idLocalizacao='"+rs.getInt("Localizacao_idLocalizacao")+"'");
-                l = new Localizacao
-                        (rsL.getInt("idLocalizacao"),rsL.getInt("Prateleira_prateleiraID"),rsL.getString("zonaID"));
+                        "SELECT * FROM Localizacao WHERE idLocalizacao="+rs.getInt("Localizacao_idLocalizacao")+" ");
+                //if(rsL.getString("Prateleira_prateleiraID") == null)
+                    l = new Localizacao
+                            (rsL.getInt("idLocalizacao"),0,rsL.getString("zonaID"));
+                //else
+                  //  l = new Localizacao
+                    //    (rsL.getInt("idLocalizacao"),rsL.getInt("Prateleira_prateleiraID"),rsL.getString("zonaID"));
 
                 ResultSet rsI = stm.executeQuery(
                         "SELECT * FROM InfoTransporte WHERE idInfoTransporte='"+rs.getInt("InfoTransporte_idInfoTransporte")+"'");
@@ -53,7 +57,7 @@ public class RobotDAO {
                             rsI.getString("Palete_qrCode"),
                             rsI.getInt("Prateleira_prateleiraID"));
 
-                p = new Robot(rs.getString("RobotId"),disp,rec,i,l);
+                p = new Robot(rs.getString("RobotID"),disp,rec,i,l);
 
             }
         } catch (SQLException e) {
@@ -112,9 +116,9 @@ public class RobotDAO {
         try (Connection conn =
                      DriverManager.getConnection(DAOconfig.URL+DAOconfig.CREDENTIALS);
              Statement stm = conn.createStatement();
-             ResultSet rs = stm.executeQuery("SELECT RobotId FROM robots")) {
+             ResultSet rs = stm.executeQuery("SELECT RobotID FROM Robot")) {
             while (rs.next()) {
-                col.add(this.get(rs.getString("RobotId")));
+                col.add(this.get(rs.getString("RobotID")));
             }
         } catch (Exception e) {
             e.printStackTrace();
