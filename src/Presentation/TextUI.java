@@ -1,3 +1,6 @@
+/**
+ * Calsase que representa a interação enter sistema e utilizador
+ */
 package Presentation;
 import Business.ISGS;
 import Business.SGS;
@@ -64,6 +67,9 @@ public class TextUI {
         model.setOnline(false);
     }
 
+    /**
+     * Lê a password introduzida e efetua o Login do Gestor
+     */
     private void introduzirPassword() {
         String pass;
         do {
@@ -74,6 +80,9 @@ public class TextUI {
         model.setOnline(true);
     }
 
+    /**
+     * Regista uma Palete
+     */
     private void registaPalete() {
         try {
             String qrCode = menu.lerString("Qr-Code da palete: ");
@@ -85,6 +94,9 @@ public class TextUI {
         }
     }
 
+    /**
+     * Notifica o Robot
+     */
     private void notificarRobot() {
         try {
             String qrCode = menu.lerString("Insira um Qr-Code: ");
@@ -95,6 +107,9 @@ public class TextUI {
         }
     }
 
+    /**
+     * Recolhe uma Palete
+     */
     private void recolherPalete(){
         try {
             String robotid = menu.lerString("Insira um robotID: ");
@@ -105,6 +120,9 @@ public class TextUI {
         }
     }
 
+    /**
+     * entrega uma Palete
+     */
     private void entregarPalete(){
         try {
             String robotid = menu.lerString("Insira um robotID: ");
@@ -115,6 +133,9 @@ public class TextUI {
         }
     }
 
+    /**
+     * Consulta a Listagem das Localizações
+     */
     private void consultarListagem(){
         menu.imprimeListagem(model.consultarListagem());
     }

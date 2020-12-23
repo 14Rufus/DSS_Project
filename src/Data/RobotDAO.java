@@ -1,3 +1,6 @@
+/**
+ * Classe que representa o acesso aos dados de um Robot
+ */
 package Data;
 import Business.Armazem.InfoTransporte;
 import Business.Armazem.Localizacao;
@@ -10,6 +13,12 @@ import java.util.Set;
 
 public class RobotDAO {
 
+    /**
+     * Verifica se uma determinada Chave existe na base de dados dos Robots
+     *
+     * @param key Chave a ser verificada
+     * @return Validação da chave
+     */
     public boolean containsKey(Object key) {
         boolean r;
         try (Connection conn =
@@ -25,6 +34,12 @@ public class RobotDAO {
         return r;
     }
 
+    /**
+     * Devolve um Robot da base de dados
+     *
+     * @param key Chave usada para encontrar o Robot prentendido
+     * @return Robot escolhido
+     */
     public Robot get(Object key) {
         Robot p = null;
         Localizacao l = null;
@@ -73,6 +88,12 @@ public class RobotDAO {
         return p;
     }
 
+    /**
+     * Adiciona um RObot à base de dados
+     *
+     * @param r Robot a ser adicionado
+     * @return todo verficar o retorno disto
+     */
     public Robot put(Robot r) {
         Robot res = null;
         InfoTransporte i = r.getInfoTransporte();
@@ -116,6 +137,12 @@ public class RobotDAO {
         return res;
     }
 
+    /**
+     * Remove um Robot da base de dados
+     *
+     * @param key Chave identificadora do Robot a ser removido
+     * @return Robot removido
+     */
     public Robot remove(Object key) {
         Robot t = this.get(key);
         try (Connection conn =
@@ -129,6 +156,11 @@ public class RobotDAO {
         return t;
     }
 
+    /**
+     * Devolve todos os Robots da base de dados
+     *
+     * @return Robots da base de dados
+     */
     public Collection<Robot> values() {
         Collection<Robot> col = new HashSet<>();
         try (Connection conn =
@@ -145,6 +177,11 @@ public class RobotDAO {
         return col;
     }
 
+    /**
+     * Calcula o número de Informações de Transporte
+     *
+     * @return Número de Informações de Transporte
+     */
     public int sizeInfo() {
         int i = 0;
         try (Connection conn =
@@ -162,6 +199,11 @@ public class RobotDAO {
         return i;
     }
 
+    /**
+     * Calcula o número de Localizações
+     *
+     * @return Número de Localizações
+     */
     public int sizeLocalizacao() {
         int i = 0;
         try (Connection conn =

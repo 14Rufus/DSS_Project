@@ -1,3 +1,6 @@
+/**
+ * Classe que representa o Menu da aplicação
+ */
 package Presentation;
 import java.util.Arrays;
 import java.util.InputMismatchException;
@@ -40,6 +43,12 @@ public class Menu {
         System.out.println("0 - Sair");
     }
 
+    /**
+     * Ler uma mensagem
+     *
+     * @param message Mensagem a ser lida
+     * @return mensagem numa só linha
+     */
     public String lerString(String message) {
         String line;
 
@@ -83,6 +92,12 @@ public class Menu {
         System.out.print("Introduza password: ");
     }
 
+    /**
+     * notificação do registo de uma Palete
+     *
+     * @param qrCode Código QR da Palete registada
+     * @param b      Boolean que indica se a Palete foi registada com sucesso
+     */
     public void notRegistaPalete(String qrCode,boolean b) {
         String msg;
         if(b)
@@ -93,6 +108,12 @@ public class Menu {
         System.out.println(msg);
     }
 
+    /**
+     * Notifica um RObot
+     *
+     * @param qrCode Código QR da Palete a ser recolhida
+     * @param robot  Robot que recolherá a Palete
+     */
     public void notRobot(String qrCode,String robot) {
         String msg;
         if(robot == null)
@@ -103,6 +124,12 @@ public class Menu {
         System.out.println(msg);
     }
 
+    /**
+     * Notificação de o Robot ter recolhido ou não a Palete
+     *
+     * @param qrCode Código QR da Palete recolhida
+     * @param robot  Robot que recolhe a Palete
+     */
     public void notRecolherPalete(String qrCode,String robot) {
         String msg;
         if(robot == null)
@@ -113,6 +140,12 @@ public class Menu {
         System.out.println(msg);
     }
 
+    /**
+     * Notificação de um Robot ter entergue ou não a Palete
+     *
+     * @param qrCode Código QR da Palete entregue
+     * @param robot  Robot que enterga a Palete
+     */
     public void notEntregarPalete(String qrCode,String robot) {
         String msg;
         if(robot == null)
@@ -123,6 +156,11 @@ public class Menu {
         System.out.println(msg);
     }
 
+    /**
+     * Imprime a Listagem das Localizações das Paletes
+     *
+     * @param l Lista de Localizações
+     */
     public void imprimeListagem(List<String> l){
         for(String s:l)
             System.out.println(s);
