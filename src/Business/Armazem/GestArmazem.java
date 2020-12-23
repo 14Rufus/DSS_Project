@@ -56,9 +56,9 @@ public class GestArmazem implements IGestArmazem {
             return 0;
         else {
             if(prat < 6)
-                return 2 + (prat * 4);
+                return 2 + ((prat-1) * 5);
             else
-                return 7 + ((prat-5) * 4);
+                return 7 + ((prat-6) * 5);
         }
     }
 
