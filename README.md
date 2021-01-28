@@ -1,8 +1,8 @@
 # DSS_Project
 
-# Nome do Projeto
+# SGS
 
-Descrição
+The aim of this project was to improve our knowledge of the subject of Software Systems Development. 
 
 # Authors
 
